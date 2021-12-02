@@ -109,4 +109,18 @@ class Micro::StructTest < Minitest::Test
       assert_equal('Serradura', last_name)
     end
   end
+
+  ExposeHash = ->(**hash) { hash }
+
+  def test_the_to_hash_method_of_micro_struct_instances
+    person1 = Person1.new(name: 'Rodrigo Serradura')
+
+    assert_equal({name: 'Rodrigo Serradura'}, ExposeHash.(**person1))
+
+    # --
+
+    person2 = Person2.new(first_name: 'Rodrigo', last_name: 'Serradura')
+
+    assert_equal({first_name: 'Rodrigo', last_name: 'Serradura'}, ExposeHash.(**person2))
+  end
 end

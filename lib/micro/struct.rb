@@ -9,6 +9,7 @@ module Micro
 
       struct.send(:private_class_method, :new)
       struct.send(:alias_method, :to_ary, :to_a)
+      struct.send(:alias_method, :to_hash, :to_h)
 
       mod = Module.new
       mod.const_set(:Struct, struct)
