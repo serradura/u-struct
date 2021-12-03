@@ -1,126 +1,207 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require 'test_helper'
 
 class Micro::StructTest < Minitest::Test
   def test_that_it_has_a_version_number
     refute_nil ::Micro::Struct::VERSION
   end
 
-  Person1 = Micro::Struct.new(:name)
+  With_ToAry = Micro::Struct.with(:to_ary)
+  With_ToAry_ToHash = Micro::Struct.with(:to_ary, :to_hash)
+  With_ToAry_ToProc = Micro::Struct.with(:to_ary, :to_proc)
 
-  Person2 = Micro::Struct.new(:first_name, :last_name) do
+  With_ToHash = Micro::Struct.with(:to_hash)
+  With_ToHash_ToProc = Micro::Struct.with(:to_hash, :to_proc)
+
+  With_ToProc = Micro::Struct.with(:to_proc)
+
+  With_ToAry_ToHash_ToProc = Micro::Struct.with(:to_ary, :to_hash, :to_proc)
+
+  Person0 = Micro::Struct.new(:name)
+
+  Person1 = Micro::Struct.new(:first_name, :last_name)
+
+  Person2a = With_ToAry.new(:first_name, :last_name)
+  Person2b = With_ToAry_ToHash.new(:first_name, :last_name)
+  Person2c = With_ToAry_ToProc.new(:first_name, :last_name)
+
+  Person3a = With_ToHash.new(:first_name, :last_name)
+  Person3b = Person2b # .with(:to_hash, :to_ary)
+  Person3c = With_ToHash_ToProc.new(:first_name, :last_name)
+
+  Person4a = With_ToProc.new(:first_name, :last_name)
+  Person4b = Person2c # .with(:to_proc, :to_ary)
+  Person4c = Person3c # .with(:to_proc, :to_hash)
+
+  Person5 = With_ToAry_ToHash_ToProc.new(:first_name, :last_name)
+
+  NAME_METHOD = proc do
     def name
       "#{first_name} #{last_name}"
     end
   end
 
+  Person6a = With_ToAry.new(:first_name, :last_name, &NAME_METHOD)
+  Person6b = With_ToAry_ToHash.new(:first_name, :last_name, &NAME_METHOD)
+  Person6c = With_ToAry_ToProc.new(:first_name, :last_name, &NAME_METHOD)
+
+  Person7a = With_ToHash.new(:first_name, :last_name, &NAME_METHOD)
+  Person7b = Person6b # .with(:to_hash, :to_ary)
+  Person7c = With_ToHash_ToProc.new(:first_name, :last_name, &NAME_METHOD)
+
+  Person8a = With_ToProc.new(:first_name, :last_name, &NAME_METHOD)
+  Person8b = Person6c # .with(:to_proc, :to_ary)
+  Person8c = Person7c # .with(:to_proc, :to_hash)
+
+  Person9 = With_ToAry_ToHash_ToProc.new(:first_name, :last_name, &NAME_METHOD)
+
   def test_missing_keyword_error
-    error1 = assert_raises(ArgumentError) { Person1.new }
+    error1 = assert_raises(ArgumentError) { Person0.new }
 
     assert_equal('missing keyword: name', error1.message)
 
     # --
 
-    error2 = assert_raises(ArgumentError) { Person2.new }
+    [ Person1,
+      Person2a, Person2b, Person2c,
+      Person3a, Person3b, Person3c,
+      Person4a, Person4b, Person4c,
+      Person5,
+      Person6a, Person6b, Person6c,
+      Person7a, Person7b, Person7c,
+      Person8a, Person8b, Person8c,
+      Person9 ].each do |mod|
+      error = assert_raises(ArgumentError) { mod.new }
 
-    assert_equal('missing keywords: first_name, last_name', error2.message)
+      assert_equal('missing keywords: first_name, last_name', error.message)
+    end
   end
 
   def test_that_a_module_is_created
-    assert_instance_of(Module, Person1)
-
-    assert_instance_of(Module, Person2)
+    [ Person0, Person1,
+      Person2a, Person2b, Person2c,
+      Person3a, Person3b, Person3c,
+      Person4a, Person4b, Person4c,
+      Person5,
+      Person6a, Person6b, Person6c,
+      Person7a, Person7b, Person7c,
+      Person8a, Person8b, Person8c,
+      Person9 ].each do |mod|
+      assert_instance_of(Module, mod, mod.inspect)
+    end
   end
 
   def test_that_the_module_contains_a_struct
-    assert(Person1::Struct < ::Struct)
-
-    assert(Person2::Struct < ::Struct)
+    [ Person0, Person1,
+      Person2a, Person2b, Person2c,
+      Person3a, Person3b, Person3c,
+      Person4a, Person4b, Person4c,
+      Person5,
+      Person6a, Person6b, Person6c,
+      Person7a, Person7b, Person7c,
+      Person8a, Person8b, Person8c,
+      Person9 ].each do |mod|
+        assert(mod::Struct < ::Struct)
+      end
   end
 
   def test_the_struct_constructor_should_be_private
-    error1 = assert_raises(NoMethodError) { Person1::Struct.new }
+    [ Person0, Person1,
+      Person2a, Person2b, Person2c,
+      Person3a, Person3b, Person3c,
+      Person4a, Person4b, Person4c,
+      Person5,
+      Person6a, Person6b, Person6c,
+      Person7a, Person7b, Person7c,
+      Person8a, Person8b, Person8c,
+      Person9 ].each do |mod|
+      error = assert_raises(NoMethodError) { mod::Struct.new }
 
-    assert_match(/private method `new' called for .*Person1::Struct/, error1.message)
-
-    # --
-
-    error2 = assert_raises(NoMethodError) { Person2::Struct.new }
-
-    assert_match(/private method `new' called for .*Person2::Struct/, error2.message)
+      assert_match(/private method `new' called for .*Person.+::Struct/, error.message)
+    end
   end
 
   def test_the_micro_struct_instances
-    person1 = Person1.new(name: 'Rodrigo Serradura')
+    person0 = Person0.new(name: 'Rodrigo Serradura')
 
-    assert_instance_of(Person1::Struct, person1)
+    assert_instance_of(Person0::Struct, person0)
 
-    assert_equal('Rodrigo Serradura', person1.name)
-
-    # --
-
-    person2 = Person2.new(first_name: 'Rodrigo', last_name: 'Serradura')
-
-    assert_instance_of(Person2::Struct, person2)
-
-    assert_equal('Rodrigo', person2.first_name)
-    assert_equal('Serradura', person2.last_name)
-
-    assert_equal('Rodrigo Serradura', person2.name)
-  end
-
-  def test_micro_struct_instances_created_from_to_proc
-    person1 = [{name: 'Rodrigo Serradura'}].map(&Person1).first
-
-    assert_instance_of(Person1::Struct, person1)
-
-    assert_equal('Rodrigo Serradura', person1.name)
+    assert_equal('Rodrigo Serradura', person0.name)
 
     # --
 
-    person2 = [{first_name: 'Rodrigo', last_name: 'Serradura'}].map(&Person2).first
+    [ Person1,
+      Person2a, Person2b, Person2c,
+      Person3a, Person3b, Person3c,
+      Person4a, Person4b, Person4c,
+      Person5,
+      Person6a, Person6b, Person6c,
+      Person7a, Person7b, Person7c,
+      Person8a, Person8b, Person8c,
+      Person9 ].each do |mod|
+      person = mod.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
-    assert_instance_of(Person2::Struct, person2)
+      assert_instance_of(mod::Struct, person)
 
-    assert_equal('Rodrigo Serradura', person2.name)
+      assert_equal('Rodrigo', person.first_name)
+      assert_equal('Serradura', person.last_name)
+    end
   end
 
   def test_the_to_ary_method_of_micro_struct_instances
-    person1 = Person1.new(name: 'Rodrigo Serradura')
+    [ Person2a, Person2b, Person2c,
+      Person6a, Person6b, Person6c,
+      Person9 ].each do |mod|
+      person = mod.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
-    person_name, * = person1
+      person_first_name, person_last_name = person
 
-    assert_equal('Rodrigo Serradura', person_name)
+      assert_equal('Rodrigo', person_first_name)
+      assert_equal('Serradura', person_last_name)
 
-    [person1].each { |(name)| assert_equal('Rodrigo Serradura', name) }
-
-    # --
-
-    person2 = Person2.new(first_name: 'Rodrigo', last_name: 'Serradura')
-
-    person_first_name, person_last_name = person2
-
-    assert_equal('Rodrigo', person_first_name)
-    assert_equal('Serradura', person_last_name)
-
-    [person2].each do |(first_name, last_name)|
-      assert_equal('Rodrigo', first_name)
-      assert_equal('Serradura', last_name)
+      [person].each do |(first_name, last_name)|
+        assert_equal('Rodrigo', first_name)
+        assert_equal('Serradura', last_name)
+      end
     end
   end
 
   ExposeHash = ->(**hash) { hash }
 
   def test_the_to_hash_method_of_micro_struct_instances
-    person1 = Person1.new(name: 'Rodrigo Serradura')
+    [ Person3a, Person3b, Person3c,
+      Person7a, Person7b, Person7c,
+      Person9 ].each do |mod|
+      data = {first_name: 'Rodrigo', last_name: 'Serradura'}
 
-    assert_equal({name: 'Rodrigo Serradura'}, ExposeHash.(**person1))
+      person = mod.new(data)
 
-    # --
+      assert_equal(data, ExposeHash.(**person))
+    end
+  end
 
-    person2 = Person2.new(first_name: 'Rodrigo', last_name: 'Serradura')
+  def test_micro_struct_instances_created_from_to_proc
+    [ Person4a, Person4b, Person4c,
+      Person8a, Person8b, Person8c,
+      Person9 ].each do |mod|
+      person = [{first_name: 'Rodrigo', last_name: 'Serradura'}].map(&mod).first
 
-    assert_equal({first_name: 'Rodrigo', last_name: 'Serradura'}, ExposeHash.(**person2))
+      assert_instance_of(mod::Struct, person)
+
+      assert_equal('Rodrigo', person.first_name)
+      assert_equal('Serradura', person.last_name)
+    end
+  end
+
+  def test_micro_struct_instances_that_received_a_block
+    [ Person6a, Person6b, Person6c,
+      Person7a, Person7b, Person7c,
+      Person8a, Person8b, Person8c,
+      Person9 ].each do |mod|
+      person = mod.new(first_name: 'Rodrigo', last_name: 'Serradura')
+
+      assert_equal('Rodrigo Serradura', person.name)
+    end
   end
 end
