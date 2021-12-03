@@ -74,15 +74,16 @@ module Micro
         struct.const_set(:Container, container)
         struct.send(:private_class_method, :new)
 
-        container.const_set(:Struct, struct)
-
         yield struct
       end
 
       def def_initialize(container, struct)
-        # The .new() method will require all of the Struct's keyword arguments.
-        # We are doing this because Struct's keyword_init option doesn't do that.
-        container.module_eval(<<~RUBY, __FILE__, __LINE__ + 1)    #
+        container.const_set(:Struct, struct)
+
+        container.module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
+          # The .new() method will require all of the Struct's keyword arguments.
+          # We are doing this because Struct's keyword_init option doesn't do that.
+          #
           def self.new(#{struct.members.join(':, ')}:)      # def self.new(a:, b:) do
             Struct.send(:new, #{struct.members.join(', ')}) #   Struct.send(:new, a, b)
           end                                               # end
