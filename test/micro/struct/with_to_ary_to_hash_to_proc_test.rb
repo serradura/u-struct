@@ -2,11 +2,7 @@
 
 require 'test_helper'
 
-class Micro::StructTest < Minitest::Test
-  def test_that_it_has_a_version_number
-    refute_nil ::Micro::Struct::VERSION
-  end
-
+class Micro::StructWithToAryToHashToProcTest < Minitest::Test
   With_ToAry = Micro::Struct.with(:to_ary)
   With_ToAry_ToHash = Micro::Struct.with(:to_ary, :to_hash)
   With_ToAry_ToProc = Micro::Struct.with(:to_ary, :to_proc)
