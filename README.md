@@ -1,8 +1,6 @@
 # Micro::Struct
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/micro/struct`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Create powered Ruby structs.
 
 ## Installation
 
@@ -22,7 +20,22 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+# Like in a regular Struct, you can define one or many attributes.
+Micro::Struct.new(:first_name, :last_name, ...)
+
+# You can also pass a block to define custom methods.
+Micro::Struct.new(:name) {}
+
+# Available features (use one, many or all):
+#   .with(:to_ary, :to_hash, :to_proc, :readonly, :instance_copy)
+
+Micro::Struct.with(:to_ary).new(:name)
+Micro::Struct.with(:to_ary, :to_hash).new(:name)
+Micro::Struct.with(:to_ary, :to_hash, :to_proc).new(:name)
+
+Micro::Struct.with(...).new(...) {}
+```
 
 ## Development
 
