@@ -92,6 +92,22 @@ class Micro::StructTest < Minitest::Test
     end
   end
 
+  def test_the_module_members
+    assert_equal([:name], Person0.members)
+
+    [ Person1,
+      Person2a, Person2b, Person2c,
+      Person3a, Person3b, Person3c,
+      Person4a, Person4b, Person4c,
+      Person5,
+      Person6a, Person6b, Person6c,
+      Person7a, Person7b, Person7c,
+      Person8a, Person8b, Person8c,
+      Person9 ].each do |mod|
+      assert_equal([:first_name, :last_name], mod.members)
+    end
+  end
+
   def test_that_the_module_contains_a_struct
     [ Person0, Person1,
       Person2a, Person2b, Person2c,

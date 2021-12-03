@@ -73,6 +73,10 @@ module Micro
           def self.new(#{struct.members.join(':, ')}:)      # def self.new(a:, b:) do
             Struct.send(:new, #{struct.members.join(', ')}) #   Struct.send(:new, a, b)
           end                                               # end
+
+          def self.members
+            Struct.members
+          end
         RUBY
       end
 
