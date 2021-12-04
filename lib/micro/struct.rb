@@ -3,7 +3,7 @@
 require_relative 'struct/version'
 require_relative 'struct/features'
 require_relative 'struct/creator'
-require_relative 'struct/validate'
+require_relative 'struct/normalize_names'
 
 module Micro
   # Like in a regular Struct, you can define one or many attributes.

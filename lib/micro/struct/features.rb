@@ -18,15 +18,15 @@ module Micro::Struct
         instance_copy: instance_copy }
     end
 
-    ValidateFeatureNames = ->(values) do
-      Validate::Names.(values, label: 'feature')
+    NormalizeFeatureNames = ->(values) do
+      NormalizeNames::AsSymbols.(values, context: 'feature')
     end
 
     def self.require(names)
-      features_to_enable =
-        ValidateFeatureNames[names].each_with_object({}) { |name, memo| memo[name] = true }
+      to_enable =
+        NormalizeFeatureNames[names].each_with_object({}) { |name, memo| memo[name] = true }
 
-      Check.(**DISABLED.merge(features_to_enable))
+      Check.(**DISABLED.merge(to_enable))
     end
   end
 

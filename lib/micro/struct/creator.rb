@@ -9,13 +9,13 @@ module Micro::Struct
       @features = Features.require(features)
     end
 
-    ValidateMemberNames = ->(values) do
-      Validate::Names.(values, label: 'member')
+    NormalizeMemberNames = ->(values) do
+      NormalizeNames::AsSymbols.(values, context: 'member')
     end
 
     def new(*members, _optional: nil, &block)
-      required_members = ValidateMemberNames[members]
-      optional_members = ValidateMemberNames[_optional]
+      required_members = NormalizeMemberNames[members]
+      optional_members = NormalizeMemberNames[_optional]
 
       container = CreateModule.with(required_members, optional_members, @features)
       struct = CreateStruct.with(required_members, optional_members, @features, &block)
