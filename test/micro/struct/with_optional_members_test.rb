@@ -3,9 +3,9 @@
 require 'test_helper'
 
 class Micro::StructWithOptionalMembersTest < Minitest::Test
-  Person0 = Micro::Struct.new(_optional: [:first_name, :last_name])
-  Person1 = Micro::Struct.new(:first_name, _optional: :last_name)
-  Person2 = Micro::Struct.with(:readonly).new(:first_name, _optional: [:last_name])
+  Person0 = Micro::Struct.new(optional: [:first_name, :last_name])
+  Person1 = Micro::Struct.new(required: :first_name, optional: :last_name)
+  Person2 = Micro::Struct.with(:readonly).new(:first_name, optional: [:last_name])
 
   def test_the_constructor
     person0 = Person0.new

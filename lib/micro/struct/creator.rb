@@ -13,9 +13,9 @@ module Micro::Struct
       NormalizeNames::AsSymbols.(values, context: 'member')
     end
 
-    def new(*members, _optional: nil, &block)
-      required_members = NormalizeMemberNames[members]
-      optional_members = NormalizeMemberNames[_optional]
+    def new(*members, required: nil, optional: nil, &block)
+      optional_members = NormalizeMemberNames[optional]
+      required_members = NormalizeMemberNames[members] + NormalizeMemberNames[required]
 
       container = CreateModule.with(required_members, optional_members, @features)
       struct = CreateStruct.with(required_members, optional_members, @features, &block)

@@ -23,7 +23,7 @@ class Micro::Struct::Creator
         method_arguments = [required, optional].reject(&:empty?).join(', ')
         struct_arguments = (required_members + optional_members).join(', ')
 
-        container.module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
+        container.module_eval(<<-RUBY, __FILE__, __LINE__ + 1)
           # The .new() method will require all required keyword arguments.
           # We are doing this because the Struct constructor keyword init option treats everything as optional.
           #
@@ -38,7 +38,7 @@ class Micro::Struct::Creator
       end
 
       def def_to_proc(container)
-        container.module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
+        container.module_eval(<<-RUBY, __FILE__, __LINE__ + 1)
           def self.to_proc
             ->(hash) { new(**hash) }
           end

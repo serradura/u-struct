@@ -31,7 +31,7 @@ class Micro::Struct::Creator
       end
 
       def def_instance_copy(struct)
-        struct.class_eval(<<~RUBY, __FILE__, __LINE__ + 1)
+        struct.class_eval(<<-RUBY, __FILE__, __LINE__ + 1)
           def with(**members)
             self.class.const_get(:Container, false).new(**to_h.merge(members))
           end

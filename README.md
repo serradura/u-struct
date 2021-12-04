@@ -26,13 +26,20 @@ Or install it yourself as:
 
 Micro::Struct.new(:first_name, :last_name, ...)
 
-# Use the `_optional:` arg if you want some optional attributes.
+# Use the `optional:` arg if you want some optional attributes.
 
-Micro::Struct.new(:first_name, :last_name, _optional: :gender)
+Micro::Struct.new(:first_name, :last_name, optional: :gender)
 
-# Using `_optional:` to define all attributes are optional.
+# Using `optional:` to define all attributes are optional.
 
-Micro::Struct.new(_optional: [:first_name, :last_name])
+Micro::Struct.new(optional: [:first_name, :last_name])
+
+# Use the `required:` arg to define required attributes.
+
+Micro::Struct.new(
+  required: [:first_name, :last_name],
+  optional: [:gender, :age]
+)
 
 # You can also pass a block to define custom methods.
 
@@ -52,11 +59,17 @@ Micro::Struct.with(:to_ary, :to_hash, :to_proc, :readonly, :instance_copy).new(:
 Micro::Struct.new(*required)
 Micro::Struct.new(*required) {}
 
-Micro::Struct.new(_optional: *)
-Micro::Struct.new(_optional: *) {}
+Micro::Struct.new(optional: *)
+Micro::Struct.new(optional: *) {}
 
-Micro::Struct.new(*required, _optional: *)
-Micro::Struct.new(*required, _optional: *) {}
+Micro::Struct.new(required: *)
+Micro::Struct.new(required: *) {}
+
+Micro::Struct.new(*required, optional: *)
+Micro::Struct.new(*required, optional: *) {}
+
+Micro::Struct.new(required: *, optional: *)
+Micro::Struct.new(required: *, optional: *) {}
 
 # Any options above can be used by the `.new()` method of the struct creator returned by the `.with()` method.
 

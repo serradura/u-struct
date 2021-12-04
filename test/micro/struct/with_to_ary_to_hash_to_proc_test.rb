@@ -18,9 +18,9 @@ class Micro::StructWithToAryToHashToProcTest < Minitest::Test
 
   Person1 = Micro::Struct.new(:first_name, :last_name)
 
-  Person2a = With_ToAry.new(:first_name, :last_name)
-  Person2b = With_ToAry_ToHash.new(:first_name, :last_name)
-  Person2c = With_ToAry_ToProc.new(:first_name, :last_name)
+  Person2a = With_ToAry.new(required: [:first_name, :last_name])
+  Person2b = With_ToAry_ToHash.new(:first_name, required: :last_name)
+  Person2c = With_ToAry_ToProc.new(:first_name, required: [:last_name])
 
   Person3a = With_ToHash.new(:first_name, :last_name)
   Person3b = Person2b # .with(:to_hash, :to_ary)
