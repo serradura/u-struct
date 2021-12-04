@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ```ruby
 # Like in a regular Struct, you can define one or many attributes.
-# But all of will be required by default.
+# But all of them will be required by default.
 
 Micro::Struct.new(:first_name, :last_name, ...)
 
