@@ -17,6 +17,7 @@ GEM
     simplecov_json_formatter (0.1.3)
 
 PLATFORMS
+  ruby
   x86_64-darwin-19
 
 DEPENDENCIES

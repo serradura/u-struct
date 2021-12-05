@@ -7,8 +7,7 @@ module Micro::Struct
         to_hash: false,
         to_proc: false,
         readonly: false,
-        instance_copy: false
-      }.freeze
+        instance_copy: false }.freeze
 
     Check = ->(to_ary:, to_hash:, to_proc:, readonly:, instance_copy:) do
       { to_ary: to_ary,

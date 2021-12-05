@@ -55,7 +55,7 @@ class Micro::StructWithToAryToHashToProcTest < Minitest::Test
   def test_missing_keyword_error
     error1 = assert_raises(ArgumentError) { Person0.new }
 
-    assert_equal('missing keyword: name', error1.message)
+    assert_match(/missing keyword: :?name/, error1.message)
 
     # --
 
@@ -70,7 +70,7 @@ class Micro::StructWithToAryToHashToProcTest < Minitest::Test
       Person9 ].each do |mod|
       error = assert_raises(ArgumentError) { mod.new }
 
-      assert_equal('missing keywords: first_name, last_name', error.message)
+      assert_match(/missing keywords: :?first_name, :?last_name/, error.message)
     end
   end
 
@@ -101,6 +101,30 @@ class Micro::StructWithToAryToHashToProcTest < Minitest::Test
       Person8a, Person8b, Person8c,
       Person9 ].each do |mod|
       assert_equal([:first_name, :last_name], mod.members)
+    end
+  end
+
+  def test_the_module_triple_equal
+    person0 = Person0.new(name: '')
+
+    assert(Person0 === person0)
+    assert(Person0::Struct === person0)
+
+    # ---
+
+    [ Person1,
+      Person2a, Person2b, Person2c,
+      Person3a, Person3b, Person3c,
+      Person4a, Person4b, Person4c,
+      Person5,
+      Person6a, Person6b, Person6c,
+      Person7a, Person7b, Person7c,
+      Person8a, Person8b, Person8c,
+      Person9 ].each do |mod|
+      person = mod.new(first_name: '', last_name: '')
+
+      assert(mod === person)
+      assert(mod::Struct === person)
     end
   end
 
@@ -185,11 +209,11 @@ class Micro::StructWithToAryToHashToProcTest < Minitest::Test
     [ Person3a, Person3b, Person3c,
       Person7a, Person7b, Person7c,
       Person9 ].each do |mod|
-      data = {first_name: 'Rodrigo', last_name: 'Serradura'}
+      hash = {first_name: 'Rodrigo', last_name: 'Serradura'}
 
-      person = mod.new(data)
+      person = mod.new(**hash)
 
-      assert_equal(data, ExposeHash.(**person))
+      assert_equal(hash, ExposeHash.(**person))
     end
   end
 

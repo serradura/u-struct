@@ -31,7 +31,7 @@ class Micro::StructWithOptionalMembersTest < Minitest::Test
     [ Person1, Person2 ].each do |mod|
       error = assert_raises(ArgumentError) { mod.new }
 
-      assert_equal('missing keyword: first_name', error.message)
+      assert_match(/missing keyword: :?first_name/, error.message)
     end
   end
 
@@ -49,6 +49,15 @@ class Micro::StructWithOptionalMembersTest < Minitest::Test
   def test_the_struct_members
     [ Person0, Person1, Person2 ].each do |mod|
       assert_equal([:first_name, :last_name], mod.members)
+    end
+  end
+
+  def test_the_module_triple_equal
+    [ Person0, Person1, Person2 ].each do |mod|
+      person = mod.new(first_name: '', last_name: '')
+
+      assert(mod === person)
+      assert(mod::Struct === person)
     end
   end
 end
