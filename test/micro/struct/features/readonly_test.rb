@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class Micro::StructWithReadonlyTest < Minitest::Test
+class Micro::Struct_Features_Readonly_Test < Minitest::Test
   Person1 = Micro::Struct.new(:first_name, :last_name)
   Person2 = Micro::Struct.with(:readonly).new(:first_name, :last_name)
 
@@ -43,24 +43,12 @@ class Micro::StructWithReadonlyTest < Minitest::Test
   end
 
   def test_instance_copying
-    person1 = Person1.new(first_name: 'Rodrigo', last_name: 'Serradura')
+    [Person1, Person2].each do |mod|
+      person = mod.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
-    error = assert_raises(NoMethodError) { person1.with(last_name: 'Bar') }
+      error = assert_raises(NoMethodError) { person.with(last_name: 'Bar') }
 
-    assert_match(/undefined method `with' for .*Person1::Struct/, error.message)
-
-    # --
-
-    person2a = Person2.new(first_name: 'Rodrigo', last_name: 'Serradura')
-
-    person2b = person2a.with(last_name: 'Foo')
-
-    assert_equal('Rodrigo', person2a.first_name)
-    assert_equal('Serradura', person2a.last_name)
-
-    assert_equal('Rodrigo', person2b.first_name)
-    assert_equal('Foo', person2b.last_name)
-
-    refute_same(person2a, person2b)
+      assert_match(/undefined method `with' for .*Person[12]::Struct/, error.message)
+    end
   end
 end

@@ -11,7 +11,7 @@ class Micro::Struct::Creator
       def_to_ary(struct) if features[:to_ary]
       def_to_hash(struct) if features[:to_hash]
       def_readonly(struct) if features[:readonly]
-      def_instance_copy(struct) if features[:readonly] || features[:instance_copy]
+      def_instance_copy(struct) if features[:instance_copy]
 
       struct
     end
@@ -19,11 +19,19 @@ class Micro::Struct::Creator
     private
 
       def def_to_ary(struct)
-        struct.send(:alias_method, :to_ary, :to_a)
+        struct.class_eval(<<-RUBY, __FILE__, __LINE__ + 1)
+          def to_ary
+            to_a
+          end
+        RUBY
       end
 
       def def_to_hash(struct)
-        struct.send(:alias_method, :to_hash, :to_h)
+        struct.class_eval(<<-RUBY, __FILE__, __LINE__ + 1)
+          def to_hash
+            to_h
+          end
+        RUBY
       end
 
       def def_readonly(struct)
