@@ -2,7 +2,7 @@
 
 require_relative 'struct/version'
 require_relative 'struct/features'
-require_relative 'struct/creator'
+require_relative 'struct/factory'
 require_relative 'struct/normalize_names'
 
 module Micro
@@ -62,7 +62,7 @@ module Micro
     end
 
     def self.with(*features)
-      Creator.new(features)
+      Factory.new(features)
     end
   end
 end

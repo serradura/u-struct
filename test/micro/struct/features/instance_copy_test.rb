@@ -9,7 +9,7 @@ class Micro::Struct_Features_InstanceCopy_Test < Minitest::Test
   def test_attributes_reading
     person = Person1.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
-    assert_instance_of(Person1::Struct, person)
+    assert_instance_of(Person1, person)
 
     assert_equal('Rodrigo', person.first_name)
     assert_equal('Serradura', person.last_name)
@@ -33,16 +33,16 @@ class Micro::Struct_Features_InstanceCopy_Test < Minitest::Test
 
     error1 = assert_raises(NoMethodError) { person2.first_name = 'Bar' }
 
-    assert_match(/private method `first_name=' called for .*Person2::Struct/, error1.message)
+    assert_match(/private method `first_name=' called for .*Person2/, error1.message)
 
     error2 = assert_raises(NoMethodError) { person2.last_name = 'Foo' }
 
-    assert_match(/private method `last_name=' called for .*Person2::Struct/, error2.message)
+    assert_match(/private method `last_name=' called for .*Person2/, error2.message)
   end
 
   def test_instance_copying
-    [Person1, Person2].each do |mod|
-      person_a = mod.new(first_name: 'Rodrigo', last_name: 'Serradura')
+    [Person1, Person2].each do |struct|
+      person_a = struct.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
       person_b = person_a.with(last_name: 'Foo')
 

@@ -67,14 +67,14 @@ class Micro::Struct_Features_ToProc_ToAry_ToHash_Test < Minitest::Test
       Person6a, Person6b, Person6c,
       Person7a, Person7b, Person7c,
       Person8a, Person8b, Person8c,
-      Person9 ].each do |mod|
-      error = assert_raises(ArgumentError) { mod.new }
+      Person9 ].each do |struct|
+      error = assert_raises(ArgumentError) { struct.new }
 
       assert_match(/missing keywords: :?first_name, :?last_name/, error.message)
     end
   end
 
-  def test_that_a_module_is_created
+  def test_that_a_struct_is_created
     [ Person0, Person1,
       Person2a, Person2b, Person2c,
       Person3a, Person3b, Person3c,
@@ -83,12 +83,12 @@ class Micro::Struct_Features_ToProc_ToAry_ToHash_Test < Minitest::Test
       Person6a, Person6b, Person6c,
       Person7a, Person7b, Person7c,
       Person8a, Person8b, Person8c,
-      Person9 ].each do |mod|
-      assert_instance_of(Module, mod, mod.inspect)
+      Person9 ].each do |struct|
+      assert(struct < ::Struct, struct.inspect)
     end
   end
 
-  def test_the_module_members
+  def test_the_struct_members
     assert_equal([:name], Person0.members)
 
     [ Person1,
@@ -99,16 +99,15 @@ class Micro::Struct_Features_ToProc_ToAry_ToHash_Test < Minitest::Test
       Person6a, Person6b, Person6c,
       Person7a, Person7b, Person7c,
       Person8a, Person8b, Person8c,
-      Person9 ].each do |mod|
-      assert_equal([:first_name, :last_name], mod.members)
+      Person9 ].each do |struct|
+      assert_equal([:first_name, :last_name], struct.members)
     end
   end
 
-  def test_the_module_triple_equal
+  def test_the_struct_triple_equal
     person0 = Person0.new(name: '')
 
     assert(Person0 === person0)
-    assert(Person0::Struct === person0)
 
     # ---
 
@@ -120,48 +119,17 @@ class Micro::Struct_Features_ToProc_ToAry_ToHash_Test < Minitest::Test
       Person6a, Person6b, Person6c,
       Person7a, Person7b, Person7c,
       Person8a, Person8b, Person8c,
-      Person9 ].each do |mod|
-      person = mod.new(first_name: '', last_name: '')
+      Person9 ].each do |struct|
+      person = struct.new(first_name: '', last_name: '')
 
-      assert(mod === person)
-      assert(mod::Struct === person)
-    end
-  end
-
-  def test_that_the_module_contains_a_struct
-    [ Person0, Person1,
-      Person2a, Person2b, Person2c,
-      Person3a, Person3b, Person3c,
-      Person4a, Person4b, Person4c,
-      Person5,
-      Person6a, Person6b, Person6c,
-      Person7a, Person7b, Person7c,
-      Person8a, Person8b, Person8c,
-      Person9 ].each do |mod|
-        assert(mod::Struct < ::Struct)
-      end
-  end
-
-  def test_the_struct_constructor_should_be_private
-    [ Person0, Person1,
-      Person2a, Person2b, Person2c,
-      Person3a, Person3b, Person3c,
-      Person4a, Person4b, Person4c,
-      Person5,
-      Person6a, Person6b, Person6c,
-      Person7a, Person7b, Person7c,
-      Person8a, Person8b, Person8c,
-      Person9 ].each do |mod|
-      error = assert_raises(NoMethodError) { mod::Struct.new }
-
-      assert_match(/private method `new' called for .*Person.+::Struct/, error.message)
+      assert(struct === person)
     end
   end
 
   def test_the_micro_struct_instances
     person0 = Person0.new(name: 'Rodrigo Serradura')
 
-    assert_instance_of(Person0::Struct, person0)
+    assert_instance_of(Person0, person0)
 
     assert_equal('Rodrigo Serradura', person0.name)
 
@@ -175,10 +143,10 @@ class Micro::Struct_Features_ToProc_ToAry_ToHash_Test < Minitest::Test
       Person6a, Person6b, Person6c,
       Person7a, Person7b, Person7c,
       Person8a, Person8b, Person8c,
-      Person9 ].each do |mod|
-      person = mod.new(first_name: 'Rodrigo', last_name: 'Serradura')
+      Person9 ].each do |struct|
+      person = struct.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
-      assert_instance_of(mod::Struct, person)
+      assert_instance_of(struct, person)
 
       assert_equal('Rodrigo', person.first_name)
       assert_equal('Serradura', person.last_name)
@@ -188,8 +156,8 @@ class Micro::Struct_Features_ToProc_ToAry_ToHash_Test < Minitest::Test
   def test_the_to_ary_method_of_micro_struct_instances
     [ Person2a, Person2b, Person2c,
       Person6a, Person6b, Person6c,
-      Person9 ].each do |mod|
-      person = mod.new(first_name: 'Rodrigo', last_name: 'Serradura')
+      Person9 ].each do |struct|
+      person = struct.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
       person_first_name, person_last_name = person
 
@@ -208,10 +176,10 @@ class Micro::Struct_Features_ToProc_ToAry_ToHash_Test < Minitest::Test
   def test_the_to_hash_method_of_micro_struct_instances
     [ Person3a, Person3b, Person3c,
       Person7a, Person7b, Person7c,
-      Person9 ].each do |mod|
+      Person9 ].each do |struct|
       hash = {first_name: 'Rodrigo', last_name: 'Serradura'}
 
-      person = mod.new(**hash)
+      person = struct.new(**hash)
 
       assert_equal(hash, ExposeHash.(**person))
     end
@@ -220,10 +188,10 @@ class Micro::Struct_Features_ToProc_ToAry_ToHash_Test < Minitest::Test
   def test_micro_struct_instances_created_from_to_proc
     [ Person4a, Person4b, Person4c,
       Person8a, Person8b, Person8c,
-      Person9 ].each do |mod|
-      person = [{first_name: 'Rodrigo', last_name: 'Serradura'}].map(&mod).first
+      Person9 ].each do |struct|
+      person = [{first_name: 'Rodrigo', last_name: 'Serradura'}].map(&struct).first
 
-      assert_instance_of(mod::Struct, person)
+      assert_instance_of(struct, person)
 
       assert_equal('Rodrigo', person.first_name)
       assert_equal('Serradura', person.last_name)
@@ -234,8 +202,8 @@ class Micro::Struct_Features_ToProc_ToAry_ToHash_Test < Minitest::Test
     [ Person6a, Person6b, Person6c,
       Person7a, Person7b, Person7c,
       Person8a, Person8b, Person8c,
-      Person9 ].each do |mod|
-      person = mod.new(first_name: 'Rodrigo', last_name: 'Serradura')
+      Person9 ].each do |struct|
+      person = struct.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
       assert_equal('Rodrigo Serradura', person.name)
     end

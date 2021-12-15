@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 module Micro::Struct
-  class Creator
-    require_relative 'creator/create_module'
-    require_relative 'creator/create_struct'
+  class Factory
+    require_relative 'factory/create_struct'
 
     def initialize(features)
       @features = Features.require(features)
@@ -17,13 +16,9 @@ module Micro::Struct
       optional_members = NormalizeMemberNames[optional]
       required_members = NormalizeMemberNames[members] + NormalizeMemberNames[required]
 
-      container = CreateModule.with(required_members, optional_members, @features)
-      struct = CreateStruct.with(required_members, optional_members, @features, &block)
-
-      container.const_set(:Struct, struct)
-      struct.const_set(:Container, container)
+      CreateStruct.with(required_members, optional_members, @features, &block)
     end
   end
 
-  private_constant :Creator
+  private_constant :Factory
 end

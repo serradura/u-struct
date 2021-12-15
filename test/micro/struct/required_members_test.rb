@@ -7,10 +7,10 @@ class Micro::Struct_RequiredMembers_Test < Minitest::Test
   Person2 = Micro::Struct.new(required: [:first_name, :last_name])
 
   def test_the_constructor
-    [ Person1, Person2 ].each do |mod|
-      person = mod.new(first_name: 'Rodrigo', last_name: 'Serradura')
+    [ Person1, Person2 ].each do |struct|
+      person = struct.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
-      assert_instance_of(mod::Struct, person)
+      assert_instance_of(struct, person)
 
       assert_equal('Rodrigo', person.first_name)
       assert_equal('Serradura', person.last_name)
@@ -26,10 +26,10 @@ class Micro::Struct_RequiredMembers_Test < Minitest::Test
   end
 
   def test_attributes_reading
-    [ Person1, Person2 ].each do |mod|
-      person = mod.new(first_name: 'Rodrigo', last_name: 'Serradura')
+    [ Person1, Person2 ].each do |struct|
+      person = struct.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
-      assert_instance_of(mod::Struct, person)
+      assert_instance_of(struct, person)
 
       assert_equal('Rodrigo', person.first_name)
       assert_equal('Serradura', person.last_name)
@@ -37,10 +37,10 @@ class Micro::Struct_RequiredMembers_Test < Minitest::Test
   end
 
   def test_attributes_writing
-    [ Person1, Person2 ].each do |mod|
-      person = mod.new(first_name: 'Rodrigo', last_name: 'Serradura')
+    [ Person1, Person2 ].each do |struct|
+      person = struct.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
-      assert_instance_of(mod::Struct, person)
+      assert_instance_of(struct, person)
 
       assert_equal('Rodrigo', person.first_name)
 
@@ -51,17 +51,16 @@ class Micro::Struct_RequiredMembers_Test < Minitest::Test
   end
 
   def test_the_struct_members
-    [ Person1, Person2 ].each do |mod|
-      assert_equal([:first_name, :last_name], mod.members)
+    [ Person1, Person2 ].each do |struct|
+      assert_equal([:first_name, :last_name], struct.members)
     end
   end
 
-  def test_the_module_triple_equal
-    [ Person1, Person2 ].each do |mod|
-      person = mod.new(first_name: '', last_name: '')
+  def test_the_struct_triple_equal
+    [ Person1, Person2 ].each do |struct|
+      person = struct.new(first_name: '', last_name: '')
 
-      assert(mod === person)
-      assert(mod::Struct === person)
+      assert(struct === person)
     end
   end
 end

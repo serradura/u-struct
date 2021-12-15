@@ -10,17 +10,17 @@ class Micro::Struct_OptionalMembers_Test < Minitest::Test
   def test_the_constructor
     person0 = Person0.new
 
-    assert_instance_of(Person0::Struct, person0)
+    assert_instance_of(Person0, person0)
 
     assert_nil(person0.first_name)
     assert_nil(person0.last_name)
 
     # --
 
-    [ Person1, Person2 ].each do |mod|
-      person = mod.new(first_name: 'Rodrigo')
+    [ Person1, Person2 ].each do |struct|
+      person = struct.new(first_name: 'Rodrigo')
 
-      assert_instance_of(mod::Struct, person)
+      assert_instance_of(struct, person)
 
       assert_equal('Rodrigo', person.first_name)
       assert_nil(person.last_name)
@@ -36,10 +36,10 @@ class Micro::Struct_OptionalMembers_Test < Minitest::Test
   end
 
   def test_attributes_reading
-    [ Person0, Person1, Person2 ].each do |mod|
-      person = mod.new(first_name: 'Rodrigo', last_name: 'Serradura')
+    [ Person0, Person1, Person2 ].each do |struct|
+      person = struct.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
-      assert_instance_of(mod::Struct, person)
+      assert_instance_of(struct, person)
 
       assert_equal('Rodrigo', person.first_name)
       assert_equal('Serradura', person.last_name)
@@ -47,10 +47,10 @@ class Micro::Struct_OptionalMembers_Test < Minitest::Test
   end
 
   def test_attributes_writing
-    [ Person0, Person1 ].each do |mod|
-      person = mod.new(first_name: 'Rodrigo', last_name: 'Serradura')
+    [ Person0, Person1 ].each do |struct|
+      person = struct.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
-      assert_instance_of(mod::Struct, person)
+      assert_instance_of(struct, person)
 
       assert_equal('Rodrigo', person.first_name)
 
@@ -65,25 +65,24 @@ class Micro::Struct_OptionalMembers_Test < Minitest::Test
 
     error1 = assert_raises(NoMethodError) { person2.first_name = 'Bar' }
 
-    assert_match(/private method `first_name=' called for .*Person2::Struct/, error1.message)
+    assert_match(/private method `first_name=' called for .*Person2/, error1.message)
 
     error2 = assert_raises(NoMethodError) { person2.last_name = 'Foo' }
 
-    assert_match(/private method `last_name=' called for .*Person2::Struct/, error2.message)
+    assert_match(/private method `last_name=' called for .*Person2/, error2.message)
   end
 
   def test_the_struct_members
-    [ Person0, Person1, Person2 ].each do |mod|
-      assert_equal([:first_name, :last_name], mod.members)
+    [ Person0, Person1, Person2 ].each do |struct|
+      assert_equal([:first_name, :last_name], struct.members)
     end
   end
 
-  def test_the_module_triple_equal
-    [ Person0, Person1, Person2 ].each do |mod|
-      person = mod.new(first_name: '', last_name: '')
+  def test_the_struct_triple_equal
+    [ Person0, Person1, Person2 ].each do |struct|
+      person = struct.new(first_name: '', last_name: '')
 
-      assert(mod === person)
-      assert(mod::Struct === person)
+      assert(struct === person)
     end
   end
 end
