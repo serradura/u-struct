@@ -10,22 +10,20 @@ gemfile do
 end
 
 RGBColor = Micro::Struct.with(:readonly, :to_ary).new(:red, :green, :blue) do
-  def to_hex
-    "##{red.to_s(16)}#{green.to_s(16)}#{blue.to_s(16)}"
-  end
-end
-
-module RGBColor
-  ColorNumber = Kind.object(name: 'Integer(>= 0 and <= 255)') do |value|
+  Number = Kind.object(name: 'Integer(>= 0 and <= 255)') do |value|
     value.is_a?(::Integer) && value >= 0 && value <= 255
   end
 
   def self.new(r:, g:, b:)
     __new__(
-      red:   ColorNumber[r, label: 'r'],
-      green: ColorNumber[g, label: 'g'],
-      blue:  ColorNumber[b, label: 'b']
+      red:   Number[r, label: 'r'],
+      green: Number[g, label: 'g'],
+      blue:  Number[b, label: 'b']
     )
+  end
+
+  def to_hex
+    "##{red.to_s(16)}#{green.to_s(16)}#{blue.to_s(16)}"
   end
 end
 
