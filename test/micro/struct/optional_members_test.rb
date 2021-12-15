@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class Micro::StructWithOptionalMembersTest < Minitest::Test
+class Micro::Struct_OptionalMembers_Test < Minitest::Test
   Person0 = Micro::Struct.new(optional: [:first_name, :last_name])
   Person1 = Micro::Struct.new(required: :first_name, optional: :last_name)
   Person2 = Micro::Struct.with(:readonly).new(:first_name, optional: [:last_name])
@@ -44,6 +44,32 @@ class Micro::StructWithOptionalMembersTest < Minitest::Test
       assert_equal('Rodrigo', person.first_name)
       assert_equal('Serradura', person.last_name)
     end
+  end
+
+  def test_attributes_writing
+    [ Person0, Person1 ].each do |mod|
+      person = mod.new(first_name: 'Rodrigo', last_name: 'Serradura')
+
+      assert_instance_of(mod::Struct, person)
+
+      assert_equal('Rodrigo', person.first_name)
+
+      person.first_name = 'Digo'
+
+      assert_equal('Digo', person.first_name)
+    end
+
+    # ---
+
+    person2 = Person2.new(first_name: 'Rodrigo', last_name: 'Serradura')
+
+    error1 = assert_raises(NoMethodError) { person2.first_name = 'Bar' }
+
+    assert_match(/private method `first_name=' called for .*Person2::Struct/, error1.message)
+
+    error2 = assert_raises(NoMethodError) { person2.last_name = 'Foo' }
+
+    assert_match(/private method `last_name=' called for .*Person2::Struct/, error2.message)
   end
 
   def test_the_struct_members

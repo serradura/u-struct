@@ -10,7 +10,7 @@ class Micro::Struct::Creator
       def_initialize(container, required_members, optional_members)
       def_triple_eq(container)
       def_members(container)
-      def_to_proc(container, features)
+      def_to_proc(container) if features[:to_proc]
 
       container
     end
@@ -28,35 +28,37 @@ class Micro::Struct::Creator
         # We are doing this because the Struct constructor keyword init option treats everything as optional.
         #
         container.module_eval(<<-RUBY, __FILE__, __LINE__ + 1)
-        def self.new(#{method_arguments})        # def self.new(a:, b:) do
-          Struct.send(:new, #{struct_arguments}) #   Struct.send(:new, a, b)
-        end                                      # end
+          def self.__new__(#{method_arguments})    # def self.__new__(a:, b:) do
+            Struct.send(:new, #{struct_arguments}) #   Struct.send(:new, a, b)
+          end                                      # end
+
+          class << self
+            alias new __new__
+          end
         RUBY
       end
 
       def def_triple_eq(container)
         container.module_eval(<<-RUBY, __FILE__, __LINE__ + 1)
-        def self.===(other)
-          Struct === other
-        end
+          def self.===(other)
+            Struct === other
+          end
         RUBY
       end
 
       def def_members(container)
         container.module_eval(<<-RUBY, __FILE__, __LINE__ + 1)
-        def self.members
-          Struct.members
-        end
+          def self.members
+            Struct.members
+          end
         RUBY
       end
 
-      def def_to_proc(container, features)
-        return unless features[:to_proc]
-
+      def def_to_proc(container)
         container.module_eval(<<-RUBY, __FILE__, __LINE__ + 1)
-        def self.to_proc
-          ->(hash) { new(**hash) }
-        end
+          def self.to_proc
+            ->(hash) { new(**hash) }
+          end
         RUBY
       end
   end

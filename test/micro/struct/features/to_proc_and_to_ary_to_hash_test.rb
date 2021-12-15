@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class Micro::StructWithToAryToHashToProcTest < Minitest::Test
+class Micro::Struct_Features_ToProc_ToAry_ToHash_Test < Minitest::Test
   With_ToAry = Micro::Struct.with(:to_ary)
   With_ToAry_ToHash = Micro::Struct.with(:to_ary, :to_hash)
   With_ToAry_ToProc = Micro::Struct.with(:to_ary, :to_proc)
