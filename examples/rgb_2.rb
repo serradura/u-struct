@@ -14,21 +14,25 @@ RGBNumber = Micro::Struct.with(:readonly).new(:value) do
     value.is_a?(::Integer) && value >= 0 && value <= 255
   end
 
-  def self.new(value, label:)
-    __new__(value: Input[value, label: label])
+  def initialize(value)
+    super(Input[value])
   end
 
   def to_s
-    value.to_s(16)
+    '%02x' % value
+  end
+
+  def inspect
+    "#<RGBNumber #{value}>"
   end
 end
 
 RGBColor = Micro::Struct.with(:readonly, :to_ary).new(:red, :green, :blue) do
   def self.new(r:, g:, b:)
     __new__(
-      red:   RGBNumber.new(r, label: 'r'),
-      green: RGBNumber.new(g, label: 'g'),
-      blue:  RGBNumber.new(b, label: 'b')
+      red:   RGBNumber.new(value: r),
+      green: RGBNumber.new(value: g),
+      blue:  RGBNumber.new(value: b)
     )
   end
 
@@ -41,13 +45,15 @@ RGBColor = Micro::Struct.with(:readonly, :to_ary).new(:red, :green, :blue) do
   end
 end
 
+puts
+
 rgb_color = RGBColor.new(r: 1, g: 1, b: 255)
 
 p rgb_color
 
 puts
-puts format('to_hex: %p', rgb_color.to_hex)
 puts format('to_a: %p', rgb_color.to_a)
+puts format('to_hex: %p', rgb_color.to_hex)
 puts
 
 r, g, b = rgb_color
@@ -55,5 +61,15 @@ r, g, b = rgb_color
 puts format('red: %p', r)
 puts format('green: %p', g)
 puts format('blue: %p', b)
+puts
 
-RGB::Color.new(r: 1, g: -1, b: 255) # Kind::Error (g: -1 expected to be a kind of Integer(>= 0 and <= 255))
+*rgb = rgb_color
+
+puts rgb.inspect
+puts
+
+begin
+  RGBColor.new(r: 1, g: -1, b: 255)
+rescue => exception
+  puts exception # Kind::Error (-1 expected to be a kind of Integer(>= 0 and <= 255))
+end

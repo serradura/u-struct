@@ -2,20 +2,20 @@
 
 module RGB
   Color = Micro::Struct.with(:readonly, :to_ary).new(:red, :green, :blue) do
-    def self.new(r:, g:, b:)
-      __new__(
-        red:   Number.new(r, label: 'r'),
-        green: Number.new(g, label: 'g'),
-        blue:  Number.new(b, label: 'b')
+    def initialize(r, g, b)
+      super(
+        Number.new(value: r, label: 'red'),
+        Number.new(value: g, label: 'green'),
+        Number.new(value: b, label: 'blue')
       )
     end
 
     def to_a
-      super.map(&:value)
+      @to_a ||= super.map(&:value)
     end
 
     def to_hex
-      "##{red}#{green}#{blue}"
+      @to_hex ||= "##{red}#{green}#{blue}"
     end
   end
 end
