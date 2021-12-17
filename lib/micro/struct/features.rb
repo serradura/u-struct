@@ -17,13 +17,12 @@ module Micro::Struct
         instance_copy: instance_copy }
     end
 
-    NormalizeFeatureNames = ->(values) do
+    Names = ->(values) do
       NormalizeNames::AsSymbols.(values, context: 'feature')
     end
 
-    def self.require(names)
-      to_enable =
-        NormalizeFeatureNames[names].each_with_object({}) { |name, memo| memo[name] = true }
+    def self.require(values)
+      to_enable = Names[values].each_with_object({}) { |name, memo| memo[name] = true }
 
       Check.(**DISABLED.merge(to_enable))
     end

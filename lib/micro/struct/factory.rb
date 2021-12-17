@@ -2,21 +2,17 @@
 
 module Micro::Struct
   class Factory
+    require_relative 'factory/members'
     require_relative 'factory/create_struct'
 
     def initialize(features)
       @features = Features.require(features)
     end
 
-    NormalizeMemberNames = ->(values) do
-      NormalizeNames::AsSymbols.(values, context: 'member')
-    end
+    def new(*required_members, required: nil, optional: nil, &struct_block)
+      members = Members.new(required_members, required, optional)
 
-    def new(*members, required: nil, optional: nil, &block)
-      optional_members = NormalizeMemberNames[optional]
-      required_members = NormalizeMemberNames[members] + NormalizeMemberNames[required]
-
-      CreateStruct.with(required_members, optional_members, @features, &block)
+      CreateStruct.with(members, struct_block, @features)
     end
   end
 
