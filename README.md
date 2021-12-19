@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/ruby%20%3E=%202.2,%20%3C%203.1-ruby.svg?colorA=99004d&colorB=cc0066" alt="Ruby">
+  <img src="https://img.shields.io/badge/ruby%20%3E=%202.2,%20%3C%203.2-ruby.svg?colorA=99004d&colorB=cc0066" alt="Ruby">
   <a href="https://rubygems.org/gems/u-struct">
     <img alt="Gem" src="https://img.shields.io/gem/v/u-struct.svg?style=flat-square">
   </a>
