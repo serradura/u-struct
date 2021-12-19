@@ -1,6 +1,24 @@
-# Micro::Struct
+<p align="center">
+  <h1 align="center">🧱 μ-struct</h1>
+  <p align="center"><i>Create powered Ruby structs.</i></p>
+  <br>
+</p>
 
-Create powered Ruby structs.
+<p align="center">
+  <img src="https://img.shields.io/badge/ruby%20%3E=%202.2,%20%3C%203.1-ruby.svg?colorA=99004d&colorB=cc0066" alt="Ruby">
+  <a href="https://rubygems.org/gems/u-struct">
+    <img alt="Gem" src="https://img.shields.io/gem/v/u-struct.svg?style=flat-square">
+  </a>
+  <a href="https://github.com/serradura/u-struct/actions/workflows/ci.yml">
+    <img alt="Build Status" src="https://github.com/serradura/u-struct/actions/workflows/ci.yml/badge.svg">
+  </a>
+  <a href="https://codeclimate.com/github/serradura/u-struct/maintainability">
+    <img alt="Maintainability" src="https://api.codeclimate.com/v1/badges/2cc0204411cc2b392b7a/maintainability">
+  </a>
+  <a href="https://codeclimate.com/github/serradura/u-struct/test_coverage">
+    <img alt="Test Coverage" src="https://api.codeclimate.com/v1/badges/2cc0204411cc2b392b7a/test_coverage">
+  </a>
+</p>
 
 ## Installation
 
