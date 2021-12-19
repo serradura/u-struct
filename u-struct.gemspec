@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{Create powered Ruby structs.}
   spec.homepage      = 'https://github.com/serradura/u-struct'
   spec.license       = 'MIT'
-  spec.required_ruby_version = '>= 2.4.0'
+  spec.required_ruby_version = '>= 2.2.0'
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/serradura/u-struct'
