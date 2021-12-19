@@ -8,4 +8,4 @@ gemspec
 gem 'rake', '~> 13.0'
 
 gem 'minitest', '~> 5.0'
-gem 'simplecov', '~> 0.21.2'
+gem 'simplecov', '~> 0.21.2' if RUBY_VERSION >= '2.5.0'
