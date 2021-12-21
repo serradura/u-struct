@@ -63,4 +63,12 @@ class Micro::Struct_RequiredMembers_Test < Minitest::Test
       assert(struct === person)
     end
   end
+
+  def test_the_invalid_member_name_error
+    err = assert_raises(NameError) do
+      Micro::Struct.new('1')
+    end
+
+    assert_match(/invalid member name: 1/, err.message)
+  end
 end

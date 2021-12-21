@@ -8,12 +8,14 @@ class Micro::Struct::Factory
       struct = ::Struct.new(*members.required_and_optional)
 
       ClassScope.def_new(struct, members)
-      ClassScope.def_to_proc(struct)         if features[:to_proc]
-      ClassScope.def_private_writers(struct) if features[:readonly]
+      
+      ClassScope.def_features(struct, features) if features.exposed?
+      ClassScope.def_to_proc(struct)            if features.option?(:to_proc)
+      ClassScope.def_private_writers(struct)    if features.option?(:readonly)
 
-      InstanceScope.def_with(struct)    if features[:instance_copy]
-      InstanceScope.def_to_ary(struct)  if features[:to_ary]
-      InstanceScope.def_to_hash(struct) if features[:to_hash]
+      InstanceScope.def_with(struct)    if features.option?(:instance_copy)
+      InstanceScope.def_to_ary(struct)  if features.option?(:to_ary)
+      InstanceScope.def_to_hash(struct) if features.option?(:to_hash)
 
       ClassScope.evaluate(struct, block)
 
@@ -38,6 +40,20 @@ class Micro::Struct::Factory
             alias __new__ new
           end
         RUBY
+      end
+
+      def self.def_features(struct, features)
+        struct.class_eval(<<-RUBY, __FILE__, __LINE__ + 1)
+          class << self
+            attr_accessor :__features__
+
+            alias features __features__
+          end
+        RUBY
+
+        struct.__features__ = features
+
+        struct.send(:private_class_method, :__features__=)
       end
 
       def self.def_to_proc(struct)

@@ -6,7 +6,7 @@ module Micro::Struct
     require_relative 'factory/create_struct'
 
     def initialize(features)
-      @features = Features.require(features)
+      @features = Features.config(features)
     end
 
     def new(*required_members, required: nil, optional: nil, &struct_block)
