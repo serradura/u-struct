@@ -38,7 +38,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added 
 
-- Add `Micro::Struct.with(:features)` to expose the struct's configured features. 
+- Add `Micro::Struct.instance` to create a struct instance from a given hash. 
+  This could be useful to create constants or a singleton value.
+
+  ```ruby
+  person1 = Micro::Struct.instance(first_name: 'Rodrigo', last_name: 'Serradura')
+  # => #<struct  first_name="Rodrigo", last_name="Serradura">
+
+  person1.first_name = 'John'
+
+  person1.first_name # => "John" 
+  ```
+
+  You can use the instance method after defining some struct feature.
+
+  ```ruby
+  person2 = Micro::Struct.with(:readonly).instance(first_name: 'Rodrigo', last_name: 'Serradura')
+  # => #<struct  first_name="Rodrigo", last_name="Serradura">
+
+  person2.first_name = 'John'
+  # NoMethodError (private method `first_name=' called for #<struct first_name="Rodrigo", last_name="Serradura">)
+  ```
+  You can use pass a block to define some custom behavior to the struct instance.
+
+  ```ruby
+  person3 = Micro::Struct.instance(first_name: 'Rodrigo', last_name: 'Serradura') do
+    def name
+      "#{first_name} #{last_name}"
+    end
+  end
+
+  person4 = Micro::Struct.with(:readonly).instance(first_name: 'Rodrigo', last_name: 'Serradura') do
+    def name
+      "#{first_name} #{last_name}"
+    end
+  end
+
+  person3.name # => "Rodrigo Serradura"
+  person4.name # => "Rodrigo Serradura"
+  ```
+
+- Add `Micro::Struct.with(:exposed_features)` to expose the struct's configured features. 
   Via the methods: `.features` and `.__features__`.
 
 ```ruby

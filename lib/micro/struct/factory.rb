@@ -14,6 +14,10 @@ module Micro::Struct
 
       CreateStruct.with(members, struct_block, @features)
     end
+
+    def instance(**members, &block)
+      new(*members.keys, &block).new(**members)
+    end
   end
 
   private_constant :Factory

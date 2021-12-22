@@ -64,5 +64,9 @@ module Micro
     def self.with(*features)
       Factory.new(features)
     end
+
+    def self.instance(**members, &block)
+      with.instance(**members, &block)
+    end
   end
 end
