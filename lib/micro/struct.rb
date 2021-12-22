@@ -31,13 +31,14 @@ module Micro
   #   Micro::Struct.new(:name) {}
   #
   # Available features (use one, many, or all) to create Structs with a special behavior:
-  # .with(:to_ary, :to_hash, :to_proc, :readonly, :instance_copy)
+  # .with(:to_ary, :to_hash, :to_proc, :readonly, :instance_copy, :exposed_features)
   #
   #   Micro::Struct.with(:to_ary).new(:name)
   #   Micro::Struct.with(:to_ary, :to_hash).new(:name)
   #   Micro::Struct.with(:to_ary, :to_hash, :to_proc).new(:name)
   #   Micro::Struct.with(:to_ary, :to_hash, :to_proc, :readonly).new(:name)
   #   Micro::Struct.with(:to_ary, :to_hash, :to_proc, :readonly, :instance_copy).new(:name)
+  #   Micro::Struct.with(:to_ary, :to_hash, :to_proc, :readonly, :instance_copy, :exposed_features).new(:name)
   #
   # All of the possible combinations to create a Ruby Struct. ;)
   #
