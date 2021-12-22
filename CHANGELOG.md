@@ -42,10 +42,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Via the methods: `.features` and `.__features__`.
 
 ```ruby
-Person = Micro::Struct.with(:features, :readonly, :to_proc).new(:name)
+Person = Micro::Struct.with(:exposed_features, :readonly, :to_proc).new(:name)
 
 Person.features
-# => #<struct Micro::Struct::Features::Config::Exposed
+# => #<struct Micro::Struct::Features::Exposed
 #      names=[:readonly, :to_proc],
 #      options={:to_ary=>false, :to_hash=>false, :to_proc=>true, :readonly=>true, :instance_copy=>false}>
 

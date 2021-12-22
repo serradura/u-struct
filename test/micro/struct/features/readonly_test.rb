@@ -40,6 +40,10 @@ class Micro::Struct_Features_Readonly_Test < Minitest::Test
     error2 = assert_raises(NoMethodError) { person2.last_name = 'Foo' }
 
     assert_match(/private method `last_name=' called for .*Person2/, error2.message)
+
+    error2 = assert_raises(NoMethodError) { person2[:last_name] = 'Foo' }
+
+    assert_match(/private method `\[\]=' called for .*Person2/, error2.message)
   end
 
   def test_instance_copying

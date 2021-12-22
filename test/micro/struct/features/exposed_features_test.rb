@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class Micro::Struct_Features_Test < Minitest::Test
+class Micro::Struct_Features_ExposedFeatures_Test < Minitest::Test
   Person0 = Micro::Struct.new(:name)
   Person1 = Micro::Struct.with(:readonly).new(:name)
 
@@ -14,8 +14,8 @@ class Micro::Struct_Features_Test < Minitest::Test
     refute_respond_to Person1, :__features__
   end
 
-  Person2 = Micro::Struct.with(:features).new(:name)
-  Person3 = Micro::Struct.with(:features, :readonly, :to_proc).new(:name)
+  Person2 = Micro::Struct.with(:exposed_features).new(:name)
+  Person3 = Micro::Struct.with(:exposed_features, :readonly, :to_proc).new(:name)
 
   def test_the_struct_has_the_features_methods
     assert_respond_to Person2, :features
