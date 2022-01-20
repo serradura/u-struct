@@ -22,7 +22,7 @@
 
 # Table of contents: <!-- omit in toc -->
 - [Introduction](#introduction)
-  - [Project Motivation](#project-motivation)
+  - [Motivation](#motivation)
 - [Installation](#installation)
 - [Usage](#usage)
   - [`Micro::Struct.new`](#microstructnew)
@@ -36,19 +36,21 @@
     - [`:readonly`](#readonly)
     - [`:instance_copy`](#instance_copy)
     - [`:exposed_features`](#exposed_features)
-  - [`Micro::Struct.instance()` or `Micro::Struct.with(...).instance()`](#microstructinstance-or-microstructwithinstance)
+  - [`Micro::Struct.instance` or `Micro::Struct.with(...).instance`](#microstructinstance-or-microstructwithinstance)
   - [TL;DR](#tldr)
 - [FAQ](#faq)
-  - [How to overwrite the Struct `.new` method?](#how-to-overwrite-the-struct-new-method)
-  - [Can I overwrite the Struct initializer?](#can-i-overwrite-the-struct-initializer)
+  - [How to override the Struct `.new` method?](#how-to-override-the-struct-new-method)
+  - [Can I override the Struct initializer?](#can-i-override-the-struct-initializer)
 - [Development](#development)
 - [Contributing](#contributing)
 - [License](#license)
 - [Code of Conduct](#code-of-conduct)
+- [Contact](#contact)
+- [Acknowledgments](#acknowledgments)
 
 ## Introduction
 
-Ruby Struct is a versatile data structure because it can behave like an Array, Hash, and ordinary object. e.g.
+Ruby `Struct` is a versatile data structure because it can behave like an `Array`, `Hash`, and ordinary object:
 
 ```ruby
 Person = Struct.new(:first_name, :last_name)
@@ -99,7 +101,7 @@ person.to_a
 # ["John", "Doe"]
 ```
 
-Because of these characteristics, structs could be excellent candidates to create different kinds of POROs (Plain Old Ruby Objects). But, it is very common to see developers avoiding its usage because of some of its behaviors, like setters or the constructor's positional arguments. The addition of keywords arguments on its constructor ([available on Ruby >= 2.5](https://www.bigbinary.com/blog/ruby-2-5-allows-creating-structs-with-keyword-arguments)) improved the experience to instantiate Struct objects. But, as it doesn't require all the arguments, some developers can still avoid its usage.
+Because of these characteristics, structs could be excellent candidates to create different kinds of POROs (Plain Old Ruby Objects). However, it is very common to see developers avoiding its usage because of some of its behaviors, like setters or the constructor's positional arguments. The addition of keywords arguments on its constructor ([available on Ruby >= 2.5](https://www.bigbinary.com/blog/ruby-2-5-allows-creating-structs-with-keyword-arguments)) improved the experience to instantiate `Struct` objects but it doesn't require all the arguments. Some developers can still feel uncomfortable with that and they might avoid its usage.
 
 Look at the example showing the Struct's `keyword_init:` option creating a constructor with optional keyword arguments:
 
@@ -118,9 +120,9 @@ Person.new(foo: 1, bar: 2)
 # ArgumentError (unknown keywords: foo, bar)
 ```
 
-### Project Motivation
+### Motivation
 
-So, given this introduction, the idea of this project is to provide a way of creating Ruby Structs with some [powerful features](#microstructwith).  And to start, let's see how the `Micro::Struct.new()` works.
+So, given this introduction, the idea of this project is to provide a way of creating Ruby Structs with some [powerful features](#microstructwith). Let's see how the `Micro::Struct.new()` works.
 
 ```ruby
 require 'u-struct'
@@ -136,7 +138,7 @@ Person.new
 
 As you can see, the struct instantiation raised an error because all of the keywords arguments are required.
 
-But, if you need one or many optional arguments, you can use the `optional:` option to define them. e.g.
+If you need one or many optional arguments, you can use the `optional:` option to define them:
 
 ```ruby
 Person = Micro::Struct.new(:first_name, optional: :last_name)
@@ -148,9 +150,7 @@ Person.new(first_name: 'Rodrigo')
 # #<struct Person first_name="Rodrigo", last_name=nil>
 ```
 
-If you want a Struct only with optional members (or attributes), as the `keyword_init:` option does.
-
-You can declare all attributes within the `optional:` option.
+If you want a `Struct` only with optional members (or attributes), as the `keyword_init:` option does, you can declare all attributes within the optional: option:
 
 ```ruby
 Person = Micro::Struct.new(optional: [:first_name, :last_name])
@@ -186,15 +186,15 @@ Or install it yourself as:
 
     $ gem install u-struct
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 ## Usage
 
 ### `Micro::Struct.new`
 
-Like `Struct.new`, you will use `Micro::Struct.new` to create your Struct classes.
+Like `Struct.new`, you will use `Micro::Struct.new` to create your `Struct` classes.
 
-The key difference is: Structs created from `Micro::Struct` will use keyword arguments in their constructors.
+The key difference is: the `Struct` created from `Micro::Struct` will use keyword arguments in their constructors.
 
 ```ruby
 Person = Struct.new(:name)          # Person
@@ -211,11 +211,11 @@ Person.new  # #<struct Person name=nil>
 Persona.new # ArgumentError (missing keyword: :name)
 ```
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 #### `optional:` option
 
-But if you need optional attributes, you can use this to define them.
+If you need optional attributes, you can use this to define them.
 
 ```ruby
 Person = Micro::Struct.new(:name, optional: :age)
@@ -239,7 +239,7 @@ Person.new(name: 'John')
 # #<struct Person name="John", age=nil, nickname=nil>
 ```
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 #### `required:` option
 
@@ -258,11 +258,11 @@ Person.new first_name: 'John', last_name: 'Doe'
 # #<struct Person first_name="John", last_name="Doe", age=nil>
 ```
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 #### Defining custom methods/behavior
 
-The `Micro::Struct.new` accepts a block as a regular Struct, and you can use it to define some custom behavior/methods.
+The `Micro::Struct.new` accepts a block as a regular `Struct`, and you can use it to define some custom behavior/methods.
 
 ```ruby
 Person = Micro::Struct.new(:first_name, :last_name, optional: :age) do
@@ -279,11 +279,11 @@ person.last_name  # "Serradura"
 person.name       # "Rodrigo Serradura"
 ```
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 ### `Micro::Struct.with`
 
-This method can do two things: first, it can create Struct factories; second, it sets some special behavior to their structs.
+This method can do two things: first, it can create `Struct` factories; second, it sets some special behavior to their structs.
 
 These are all of the available features which you can use (pick one, many, or all of them):
 - [`:to_ary`](#to_ary)
@@ -293,15 +293,19 @@ These are all of the available features which you can use (pick one, many, or al
 - [`:instance_copy`](#instance_copy)
 - [`:exposed_features`](#exposed_features)
 
+Look at an example of defining a `Struct` factory that can create "immutable" structs by picking the `:readonly`, `:instance_copy` features.
+
 ```ruby
 ReadonlyStruct = Micro::Struct.with(:readonly, :instance_copy)
 
-Person = ReadonlyStruct.new(:first_name, :last_name)
+# Use the factory to create structs with the same characteristics:
 
-Person.new # ArgumentError (missing keywords: :first_name, :last_name)
+Person = ReadonlyStruct.new(:first_name, :last_name)
 
 person = Person.new(first_name: 'Rodrigo', last_name: 'Rodrigues')
 # #<struct Person first_name="Rodrigo", last_name="Rodrigues">
+
+# The `:readonly` sets all the Struct writers as private.
 
 person.last_name = ''
 # NoMethodError (private method `last_name=' called for #<struct Person ...>)
@@ -309,15 +313,24 @@ person.last_name = ''
 person[:last_name] = ''
 # NoMethodError (private method `[]=' called for #<struct Person ...>)
 
-person.with(last_name: 'Serradura')
+# The `:instance_copy` defines a `#with` instance method,
+# which allows you to create a new instance from the current struct state.
+
+new_person = person.with(last_name: 'Serradura')
 # #<struct Person first_name="Rodrigo", last_name="Serradura">
+
+new_person == person
+# false
+
+new_person.class == person.class
+# true
 ```
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 #### `:to_ary`
 
-Defines a `#to_ary` method which will invoke the struct `#to_a` method, so if you overwrite the `#to_a` method you will also affect it.
+Defines a `#to_ary` method which will invoke the struct `#to_a` method. If you override the `#to_a` method you will also affect it.
 
 The `#to_ary` makes Ruby know how to deconstruct an object like an array.
 
@@ -336,11 +349,11 @@ p last_name  # "Serradura"
 p first_and_last_name # ["Rodrigo", "Serradura"]
 ```
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 #### `:to_hash`
 
-Defines a `#to_hash` method which will invoke the struct `#to_h` method, so if you overwrite the `#to_a` method you will also affect it.
+Defines a `#to_hash` method which will invoke the struct `#to_h` method. If you override the `#to_h` method you will also affect it.
 
 The `#to_hash` makes Ruby know how to deconstruct an object like a hash.
 
@@ -357,7 +370,7 @@ greet(**person)
 # Hi Rodrigo Serradura!
 ```
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 #### `:to_proc`
 
@@ -378,7 +391,7 @@ Person = Micro::Struct.with(:to_proc).new(:first_name, :last_name)
 # ]
 ```
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 #### `:readonly`
 
@@ -397,7 +410,7 @@ person[:last_name] = ''
 # NoMethodError (private method `[]=' called for #<struct Person ...>)
 ```
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 #### `:instance_copy`
 
@@ -425,7 +438,7 @@ person.last_name     # => "Serradura"
 new_person.last_name # => "Doe"
 ```
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 #### `:exposed_features`
 
@@ -454,9 +467,9 @@ Person.features.options?(:to_proc, :readonly) # => true
 Person.features.options?(:to_ary, :readonly)  # => false
 ```
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
-### `Micro::Struct.instance()` or `Micro::Struct.with(...).instance()`
+### `Micro::Struct.instance` or `Micro::Struct.with(...).instance`
 
 Creates a struct instance from a given hash. This could be useful to create constants or a singleton value.
 
@@ -498,18 +511,17 @@ person3.name # => "Rodrigo Serradura"
 person4.name # => "Rodrigo Serradura"
 ```
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 ### TL;DR
 
-Like in a regular Struct, you can define one or many attributes.
-But all of them will be required by default.
+Like in a regular `Struct`, you can define one or many attributes but all of them will be required by default.
 
 ```ruby
 Micro::Struct.new(:first_name, :last_name, ...)
 ```
 
-Use the `optional:` arg if you want some optional attributes.
+Use the `optional:` argument if you want some optional attributes.
 
 ```ruby
 Micro::Struct.new(:first_name, :last_name, optional: :gender)
@@ -519,7 +531,7 @@ Micro::Struct.new(:first_name, :last_name, optional: :gender)
 Micro::Struct.new(optional: [:first_name, :last_name])
 ```
 
-Use the `required:` arg to define required attributes.
+Use the `required:` argument to define required attributes.
 
 ```ruby
 Micro::Struct.new(
@@ -572,13 +584,13 @@ Micro::Struct.with(*features).new(...) {}
 
 Use `Micro::Struct.instance()` or `Micro::Struct.with(...).instance()` to create a struct instance from a given hash.
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 ## FAQ
 
-### How to overwrite the Struct `.new` method?
+### How to override the Struct `.new` method?
 
-The `.new` is an alias for the `.__new__` method, so you can use `.__new__` when overwriting it.
+The `.new` is an alias for the `.__new__` method, so you can use `.__new__` when overriding it.
 
 ```ruby
 module RGB
@@ -608,9 +620,9 @@ rgb_color.to_hex
 # => "#0105ff"
 ```
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
-### Can I overwrite the Struct initializer?
+### Can I override the Struct initializer?
 
 Yes, you can, but the initializer must handle the arguments as positional ones.
 
@@ -646,7 +658,7 @@ RGBColor.new(red: 1, green: -1, blue: 255)
 # TypeError (-1 must be an Integer(>= 0 and <= 255))
 ```
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 ## Development
 
@@ -654,22 +666,32 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/serradura/u-struct. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/serradura/u-struct/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/serradura/u-struct. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/serradura/u-struct/blob/main/CODE_OF_CONDUCT.md).
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
 
 ## Code of Conduct
 
-Everyone interacting in the Micro::Struct project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/serradura/u-struct/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Micro::Struct project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/serradura/u-struct/blob/main/CODE_OF_CONDUCT.md).
 
-[⬆️ &nbsp;Back to Top](#table-of-contents-)
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
+
+## Contact
+
+Rodrigo Serradura - [Twitter](https://twitter.com/serradura) | [LinkedIn](https://www.linkedin.com/in/rodrigo-serradura/).
+
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
+
+## Acknowledgments
+
+- [`@vitoravelino`](https://github.com/vitoravelino) thanks for talking about some gem's ideas and reviewing the documentation.

@@ -37,13 +37,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-[⬆️ &nbsp;Back to Top](#changelog-)
+<p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [1.0.0] - 2021-01-19
 
 - Review and update docs and examples. ;)
 
-[⬆️ &nbsp;Back to Top](#changelog-)
+<p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.12.0] - 2021-12-22
 
@@ -115,7 +115,7 @@ Person.features.options?(:to_proc, :readonly) # => true
 Person.features.options?(:to_ary, :readonly)  # => false
 ```
 
-[⬆️ &nbsp;Back to Top](#changelog-)
+<p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.11.0] - 2021-12-19
 
@@ -125,7 +125,7 @@ Person.features.options?(:to_ary, :readonly)  # => false
 - Set up a CI with Github actions.
 - Test the codebase against the Ruby versions: `2.2`, `2.3`, `2.4`, `2.5`, `2.6`, `2.7`, `3.0` and `3.1.0-preview1`.
 
-[⬆️ &nbsp;Back to Top](#changelog-)
+<p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.10.0] - 2021-12-15
 
@@ -159,7 +159,7 @@ rgb_color.to_hex
 # => "#0105ff"
 ```
 
-[⬆️ &nbsp;Back to Top](#changelog-)
+<p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.9.0] - 2021-12-14
 
@@ -248,7 +248,7 @@ rgb_color.to_ary  # => [1, 5, 255]
 rgb_color.to_hash # => {:r=>1, :g=>5, :b=>255}
 ```
 
-[⬆️ &nbsp;Back to Top](#changelog-)
+<p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.8.0] - 2021-12-05
 
@@ -266,7 +266,7 @@ Person === person
 # => true
 ```
 
-[⬆️ &nbsp;Back to Top](#changelog-)
+<p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.7.0] - 2021-12-04
 
@@ -295,7 +295,7 @@ Person = Micro::Struct.new(
 )
 ```
 
-[⬆️ &nbsp;Back to Top](#changelog-)
+<p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.6.0] - 2021-12-03
 
@@ -320,7 +320,7 @@ Persona.new
 # => #<struct Persona::Struct first_name=nil, last_name=nil>
 ```
 
-[⬆️ &nbsp;Back to Top](#changelog-)
+<p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.5.0] - 2021-12-02
 
@@ -371,7 +371,7 @@ person.name     # => "Rodrigo Serradura"
 new_person.name # => "John Doe"
 ```
 
-[⬆️ &nbsp;Back to Top](#changelog-)
+<p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.4.0] - 2021-12-02
 
@@ -400,7 +400,7 @@ person.respond_to?(:to_hash) # => false
 Person.respond_to?(:to_proc) # => false
 ```
 
-[⬆️ &nbsp;Back to Top](#changelog-)
+<p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.3.1] - 2021-12-02
 
@@ -408,7 +408,7 @@ Person.respond_to?(:to_proc) # => false
 
 - Fix the spec.files config of `u-struct.gemspec`.
 
-[⬆️ &nbsp;Back to Top](#changelog-)
+<p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.3.0] - 2021-12-02
 
@@ -416,7 +416,7 @@ Person.respond_to?(:to_proc) # => false
 
 - Add `lib/u-struct.rb` to allow the bundler to require the gem in an automatic way.
 
-[⬆️ &nbsp;Back to Top](#changelog-)
+<p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.2.0] - 2021-12-02
 
@@ -436,7 +436,7 @@ person = Person.new(first_name: 'Rodrigo', last_name: 'Serradura')
 print_first_and_last_name(**person) # Rodrigo Serradura
 ```
 
-[⬆️ &nbsp;Back to Top](#changelog-)
+<p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.1.0] - 2021-12-02
 
@@ -499,4 +499,4 @@ Person::Struct.new
 # => NoMethodError (private method `new' called for Person::Struct:Class)
 ```
 
-[⬆️ &nbsp;Back to Top](#changelog-)
+<p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
