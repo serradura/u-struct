@@ -39,11 +39,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [⬆️ &nbsp;Back to Top](#changelog-)
 
+## [1.0.0] - 2021-01-19
+
+- Review and update docs and examples. ;)
+
+[⬆️ &nbsp;Back to Top](#changelog-)
+
 ## [0.12.0] - 2021-12-22
 
-### Added 
+### Added
 
-- Add `Micro::Struct.instance` to create a struct instance from a given hash. 
+- Add `Micro::Struct.instance` to create a struct instance from a given hash.
   This could be useful to create constants or a singleton value.
 
   ```ruby
@@ -52,7 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
   person1.first_name = 'John'
 
-  person1.first_name # => "John" 
+  person1.first_name # => "John"
   ```
 
   You can use the instance method after defining some struct feature.
@@ -83,7 +89,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   person4.name # => "Rodrigo Serradura"
   ```
 
-- Add `Micro::Struct.with(:exposed_features)` to expose the struct's configured features. 
+- Add `Micro::Struct.with(:exposed_features)` to expose the struct's configured features.
   Via the methods: `.features` and `.__features__`.
 
 ```ruby
@@ -113,7 +119,7 @@ Person.features.options?(:to_ary, :readonly)  # => false
 
 ## [0.11.0] - 2021-12-19
 
-### Added 
+### Added
 
 - Reduce the required Ruby version to `>= 2.2.0`.
 - Set up a CI with Github actions.
