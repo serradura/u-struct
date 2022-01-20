@@ -38,6 +38,9 @@
     - [`:exposed_features`](#exposed_features)
   - [`Micro::Struct.instance()` or `Micro::Struct.with(...).instance()`](#microstructinstance-or-microstructwithinstance)
   - [TL;DR](#tldr)
+- [FAQ](#faq)
+  - [How to overwrite the Struct `.new` method?](#how-to-overwrite-the-struct-new-method)
+  - [Can I overwrite the Struct initializer?](#can-i-overwrite-the-struct-initializer)
 - [Development](#development)
 - [Contributing](#contributing)
 - [License](#license)
@@ -568,6 +571,80 @@ Micro::Struct.with(*features).new(...) {}
 ```
 
 Use `Micro::Struct.instance()` or `Micro::Struct.with(...).instance()` to create a struct instance from a given hash.
+
+[⬆️ &nbsp;Back to Top](#table-of-contents-)
+
+## FAQ
+
+### How to overwrite the Struct `.new` method?
+
+The `.new` is an alias for the `.__new__` method, so you can use `.__new__` when overwriting it.
+
+```ruby
+module RGB
+  Number = ::Struct.new(:value) { def to_s; '%02x' % value; end }
+
+  Color = Micro::Struct.new(:red, :green, :blue) do
+    def to_hex
+      "##{red}#{green}#{blue}"
+    end
+  end
+
+  module Color
+    def self.new(r, g, b)
+      __new__(
+        red: Number.new(r),
+        green: Number.new(g),
+        blue: Number.new(b),
+      )
+    end
+  end
+end
+
+rgb_color = RGB::Color.new(1,5,255)
+# => #<struct RGB::Color::Struct red=#<struct RGB::Number value=1>, green=#<struct RGB::Number value=5>, blue=#<struct RGB::Number value=255>>
+
+rgb_color.to_hex
+# => "#0105ff"
+```
+
+[⬆️ &nbsp;Back to Top](#table-of-contents-)
+
+### Can I overwrite the Struct initializer?
+
+Yes, you can, but the initializer must handle the arguments as positional ones.
+
+```ruby
+RGBColor = Micro::Struct.with(:readonly, :to_ary).new(:red, :green, :blue) do
+  Number = ->(value) do
+    return value if value.is_a?(::Integer) && value >= 0 && value <= 255
+
+    raise TypeError, "#{value} must be an Integer(>= 0 and <= 255)"
+  end
+
+  def initialize(r, g, b)
+    super(Number[r], Number[g], Number[b])
+  end
+
+  def to_hex
+    '#%02x%02x%02x' % self
+  end
+end
+
+rgb_color = RGBColor.new(red: 1, green: 1, blue: 255)
+# #<struct RGBColor red=1, green=1, blue=255>
+
+r, g, b = rgb_color
+
+[r,g,b]
+# [1, 1, 255]
+
+rgb_color.to_hex
+# "#0101ff"
+
+RGBColor.new(red: 1, green: -1, blue: 255)
+# TypeError (-1 must be an Integer(>= 0 and <= 255))
+```
 
 [⬆️ &nbsp;Back to Top](#table-of-contents-)
 

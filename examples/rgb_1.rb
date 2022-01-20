@@ -6,12 +6,13 @@ gemfile do
   source 'https://rubygems.org'
 
   gem 'u-struct', path: '..'
-  gem 'kind'
 end
 
 RGBColor = Micro::Struct.with(:readonly, :to_ary).new(:red, :green, :blue) do
-  Number = Kind.object(name: 'Integer(>= 0 and <= 255)') do |value|
-    value.is_a?(::Integer) && value >= 0 && value <= 255
+  Number = ->(value) do
+    return value if value.is_a?(::Integer) && value >= 0 && value <= 255
+
+    raise TypeError, "#{value} must be an Integer(>= 0 and <= 255)"
   end
 
   def initialize(r, g, b)
@@ -49,5 +50,5 @@ puts
 begin
   RGBColor.new(red: 1, green: -1, blue: 255)
 rescue => exception
-  puts exception # Kind::Error (-1 expected to be a kind of Integer(>= 0 and <= 255))
+  puts exception # TypeError (-1 must be an Integer(>= 0 and <= 255))
 end
