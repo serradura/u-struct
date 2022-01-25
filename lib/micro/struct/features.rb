@@ -1,29 +1,20 @@
+# typed: true
 # frozen_string_literal: true
 
 module Micro::Struct
   module Features
-    Names = ->(values) do
-      NormalizeNames::AsSymbols.(values, context: 'feature')
-    end
-
     module Options
-      def self.check(to_ary:, to_hash:, to_proc:, readonly:, instance_copy:, exposed_features:)
-        { to_ary: to_ary,
-          to_hash: to_hash,
-          to_proc: to_proc, 
-          readonly: readonly,
-          instance_copy: instance_copy,
-          exposed_features: exposed_features }
-      end
+      def self.from(names:)
+        options = names.each_with_object({}) { |name, memo| memo[name] = true }
 
-      With = ->(bool, names) { names.each_with_object({}) { |name, memo| memo[name] = bool } }
-
-      DISABLED = With.(false, method(:check).parameters.map(&:last)).freeze
-
-      def self.from_names(values)
-        enabled = With.(true, values)
-
-        check(**DISABLED.merge(enabled))
+        {
+          to_ary: options.fetch(:to_ary, false),
+          to_hash: options.fetch(:to_hash, false),
+          to_proc: options.fetch(:to_proc, false),
+          readonly: options.fetch(:readonly, false),
+          instance_copy: options.fetch(:instance_copy, false),
+          exposed_features: options.fetch(:exposed_features, false)
+        }
       end
     end
 
@@ -31,7 +22,7 @@ module Micro::Struct
       def option?(name)
         options.fetch(name)
       end
-      
+
       def options?(*names)
         names.all? { |name| option?(name) }
       end
@@ -39,9 +30,13 @@ module Micro::Struct
 
     Exposed = Class.new(Config)
 
+    Names = ->(values) do
+      NormalizeNames::AsSymbols.(values, context: 'feature')
+    end
+
     def self.config(values)
       names = Names[values]
-      options = Options.from_names(names)
+      options = Options.from(names: names)
 
       return Config.new(names, options) unless options[:exposed_features]
 

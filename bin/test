@@ -1,8 +1,0 @@
-#!/bin/bash
-
-set -e
-
-rm Gemfile.lock
-
-bundle update
-bundle exec rake test
