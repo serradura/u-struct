@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 require_relative 'struct/version'
@@ -59,11 +60,11 @@ module Micro
   #   Micro::Struct.with(*features).new(...) {}
   module Struct
     def self.new(*members, required: nil, optional: nil, &block)
-      with.new(*members, required: required, optional: optional, &block)
+      with.__create__(members, required, optional, block)
     end
 
-    def self.with(*features)
-      Factory.new(features)
+    def self.with(*feature_names)
+      Factory.new(feature_names)
     end
 
     def self.instance(**members, &block)

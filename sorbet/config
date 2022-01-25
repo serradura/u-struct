@@ -1,0 +1,8 @@
+--dir
+.
+
+--ignore
+examples
+
+--ignore
+vendor

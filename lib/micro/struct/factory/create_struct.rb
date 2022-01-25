@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 module Micro::Struct
@@ -5,11 +6,11 @@ module Micro::Struct
     module CreateStruct
       extend self
 
-      def with(members, block, features)
-        struct = ::Struct.new(*members.required_and_optional)
+      def with(members, features, struct_block)
+        struct = create_struct(members)
 
         ClassScope.def_new(struct, members)
-      
+
         ClassScope.def_features(struct, features) if features.is_a?(Features::Exposed)
         ClassScope.def_to_proc(struct)            if features.option?(:to_proc)
         ClassScope.def_private_writers(struct)    if features.option?(:readonly)
@@ -18,9 +19,15 @@ module Micro::Struct
         InstanceScope.def_to_ary(struct)  if features.option?(:to_ary)
         InstanceScope.def_to_hash(struct) if features.option?(:to_hash)
 
-        ClassScope.evaluate(struct, block)
+        ClassScope.evaluate(struct, struct_block)
 
         struct
+      end
+
+      private
+
+      def create_struct(members)
+        ::Struct.new(*members.required_and_optional)
       end
 
       module ClassScope
@@ -67,7 +74,7 @@ module Micro::Struct
 
         def self.def_private_writers(struct)
           struct.send(:private, :[]=)
-          struct.send(:private, *struct.members.map { |member| "#{member}=" })
+          struct.members.each { |member| struct.send(:private, "#{member}=") }
         end
 
         def self.evaluate(struct, block)
