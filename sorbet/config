@@ -3,3 +3,6 @@
 
 --ignore
 examples
+
+--ignore
+vendor
