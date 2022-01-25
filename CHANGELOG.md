@@ -37,6 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add `.rbi` files, and set up sorbet to be used in development.
+
 <p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [1.0.0] - 2021-01-19
