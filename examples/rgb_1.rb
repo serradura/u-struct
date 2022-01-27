@@ -12,7 +12,7 @@ RGBColor = Micro::Struct.with(:readonly, :to_ary).new(:red, :green, :blue) do
   Number = ->(value) do
     return value if value.is_a?(::Integer) && value >= 0 && value <= 255
 
-    raise TypeError, "#{value} must be an Integer(>= 0 and <= 255)"
+    raise TypeError.new("#{value} must be an Integer(>= 0 and <= 255)")
   end
 
   def initialize(r, g, b)
@@ -20,7 +20,7 @@ RGBColor = Micro::Struct.with(:readonly, :to_ary).new(:red, :green, :blue) do
   end
 
   def to_hex
-    '#%02x%02x%02x' % self
+    format('#%<r>02x%<g>02x%<b>02x', r: red, g: green, b: blue)
   end
 end
 
@@ -49,6 +49,6 @@ puts
 
 begin
   RGBColor.new(red: 1, green: -1, blue: 255)
-rescue => exception
+rescue TypeError => exception
   puts exception # TypeError (-1 must be an Integer(>= 0 and <= 255))
 end

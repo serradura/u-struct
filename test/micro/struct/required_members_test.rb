@@ -7,7 +7,7 @@ class Micro::Struct_RequiredMembers_Test < Minitest::Test
   Person2 = Micro::Struct.new(required: [:first_name, :last_name])
 
   def test_the_constructor
-    [ Person1, Person2 ].each do |struct|
+    [Person1, Person2].each do |struct|
       person = struct.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
       assert_instance_of(struct, person)
@@ -18,7 +18,7 @@ class Micro::Struct_RequiredMembers_Test < Minitest::Test
 
     # --
 
-    [ Person1, Person2 ].each do |mod|
+    [Person1, Person2].each do |mod|
       error = assert_raises(ArgumentError) { mod.new }
 
       assert_match(/missing keywords: :?first_name, :?last_name/, error.message)
@@ -26,7 +26,7 @@ class Micro::Struct_RequiredMembers_Test < Minitest::Test
   end
 
   def test_attributes_reading
-    [ Person1, Person2 ].each do |struct|
+    [Person1, Person2].each do |struct|
       person = struct.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
       assert_instance_of(struct, person)
@@ -37,7 +37,7 @@ class Micro::Struct_RequiredMembers_Test < Minitest::Test
   end
 
   def test_attributes_writing
-    [ Person1, Person2 ].each do |struct|
+    [Person1, Person2].each do |struct|
       person = struct.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
       assert_instance_of(struct, person)
@@ -51,13 +51,13 @@ class Micro::Struct_RequiredMembers_Test < Minitest::Test
   end
 
   def test_the_struct_members
-    [ Person1, Person2 ].each do |struct|
+    [Person1, Person2].each do |struct|
       assert_equal([:first_name, :last_name], struct.members)
     end
   end
 
   def test_the_struct_triple_equal
-    [ Person1, Person2 ].each do |struct|
+    [Person1, Person2].each do |struct|
       person = struct.new(first_name: '', last_name: '')
 
       assert(struct === person)

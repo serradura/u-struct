@@ -15,7 +15,7 @@ class Micro::Struct_Initializer_Test < Minitest::Test
   end
 
   def test_the_new_constructor
-    [ Person2 ].each do |struct|
+    [Person2].each do |struct|
       person = struct.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
       assert_instance_of(struct, person)

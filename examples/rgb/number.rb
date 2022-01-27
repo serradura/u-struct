@@ -11,7 +11,7 @@ module RGB
     end
 
     def to_s
-      @to_s ||= '%02x' % value
+      @to_s ||= format('%02x', value)
     end
 
     def inspect

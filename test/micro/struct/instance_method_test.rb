@@ -45,7 +45,7 @@ class Micro::Struct_InstanceMethod_Test < Minitest::Test
     end
 
     assert_kind_of(::Struct, person1)
-    assert_kind_of(::Struct, person2)    
+    assert_kind_of(::Struct, person2)
 
     assert_equal('Rodrigo Serradura', person1.name)
     assert_equal('Rodrigo Serradura', person2.name)

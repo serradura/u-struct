@@ -7,7 +7,7 @@ class Micro::Struct_Features_Readonly_Test < Minitest::Test
   Person2 = Micro::Struct.with(:readonly).new(:first_name, :last_name)
 
   def test_attributes_reading
-    [ Person1, Person2 ].each do |struct|
+    [Person1, Person2].each do |struct|
       person = struct.new(first_name: 'Rodrigo', last_name: 'Serradura')
 
       assert_instance_of(struct, person)

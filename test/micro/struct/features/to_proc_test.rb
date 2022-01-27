@@ -7,7 +7,7 @@ class Micro::Struct_Features_ToProc_Test < Minitest::Test
 
   def test_the_module_to_proc_method
     people = [
-      { first_name: 'Rodrigo', last_name: 'Serradura' }
+      {first_name: 'Rodrigo', last_name: 'Serradura'}
     ].map(&Person)
 
     person = people.last
