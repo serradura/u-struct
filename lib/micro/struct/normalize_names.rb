@@ -8,8 +8,8 @@ module Micro::Struct
       Invalid = ->(context, val) { raise NameError.new("invalid #{context} name: #{val}") }
       AsSymbol = ->(context, val) { REGEXP =~ val ? val.to_sym : Invalid[context, val] }
 
-      def self.call(values, context:)
-        Array(values).map{ |values| AsSymbol[context, values] }
+      def self.call(arg, context:)
+        Array(arg).map { |values| AsSymbol[context, values] }
       end
     end
   end

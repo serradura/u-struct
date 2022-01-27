@@ -35,18 +35,18 @@ class Micro::Struct_Features_ExposedFeatures_Test < Minitest::Test
     assert Person2.features.frozen?
     assert Person3.features.frozen?
 
-    assert_equal [], Person2.features.names
+    assert_empty Person2.features.names
     assert_equal [:readonly, :to_proc], Person3.features.names
 
     assert Person2.features.options.frozen?
     assert Person3.features.options.frozen?
 
     assert_equal(
-      { to_ary: false, to_hash: false, to_proc: false, readonly: false, instance_copy: false },
+      {to_ary: false, to_hash: false, to_proc: false, readonly: false, instance_copy: false},
       Person2.features.options
     )
     assert_equal(
-      { to_ary: false, to_hash: false, to_proc: true, readonly: true, instance_copy: false },
+      {to_ary: false, to_hash: false, to_proc: true, readonly: true, instance_copy: false},
       Person3.features.options
     )
 

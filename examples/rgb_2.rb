@@ -19,7 +19,7 @@ RGBNumber = Micro::Struct.with(:readonly).new(:value) do
   end
 
   def to_s
-    '%02x' % value
+    format('%02x', value)
   end
 
   def inspect
@@ -70,6 +70,6 @@ puts
 
 begin
   RGBColor.new(r: 1, g: -1, b: 255)
-rescue => exception
+rescue Kind::Error => exception
   puts exception # Kind::Error (-1 expected to be a kind of Integer(>= 0 and <= 255))
 end

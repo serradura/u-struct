@@ -37,6 +37,6 @@ puts
 
 begin
   RGB::Color.new(red: 1, green: -1, blue: 255)
-rescue => exception
+rescue Kind::Error => exception
   puts exception # Kind::Error (green: -1 expected to be a kind of Integer(>= 0 and <= 255))
 end
