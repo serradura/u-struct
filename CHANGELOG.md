@@ -37,17 +37,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+[Diff](https://github.com/serradura/u-struct/compare/v1.0.0...main)
+
 - Add `.rbi` files, and set up sorbet to be used in development.
 
 <p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [1.0.0] - 2021-01-19
 
+[Diff](https://github.com/serradura/u-struct/compare/v0.12.0...v1.0.0) | [Tag](https://github.com/serradura/u-struct/tree/v1.0.0)
+
 - Review and update docs and examples. ;)
 
 <p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.12.0] - 2021-12-22
+
+[Diff](https://github.com/serradura/u-struct/compare/v0.11.0...v0.12.0) | [Tag](https://github.com/serradura/u-struct/tree/v0.12.0)
 
 ### Added
 
@@ -121,6 +127,8 @@ Person.features.options?(:to_ary, :readonly)  # => false
 
 ## [0.11.0] - 2021-12-19
 
+[Diff](https://github.com/serradura/u-struct/compare/v0.10.0...v0.11.0) | [Tag](https://github.com/serradura/u-struct/tree/v0.11.0)
+
 ### Added
 
 - Reduce the required Ruby version to `>= 2.2.0`.
@@ -130,6 +138,8 @@ Person.features.options?(:to_ary, :readonly)  # => false
 <p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.10.0] - 2021-12-15
+
+[Diff](https://github.com/serradura/u-struct/compare/v0.9.0...v0.10.0) | [Tag](https://github.com/serradura/u-struct/tree/v0.10.0)
 
 ### Changed
 
@@ -164,6 +174,8 @@ rgb_color.to_hex
 <p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.9.0] - 2021-12-14
+
+[Diff](https://github.com/serradura/u-struct/compare/v0.8.0...v0.9.0) | [Tag](https://github.com/serradura/u-struct/tree/v0.9.0)
 
 ### Added
 
@@ -254,6 +266,8 @@ rgb_color.to_hash # => {:r=>1, :g=>5, :b=>255}
 
 ## [0.8.0] - 2021-12-05
 
+[Diff](https://github.com/serradura/u-struct/compare/v0.7.0...v0.8.0) | [Tag](https://github.com/serradura/u-struct/tree/v0.8.0)
+
 ### Added
 
 - Add `.===` to the module, it delegates the calling to its struct.
@@ -271,6 +285,8 @@ Person === person
 <p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.7.0] - 2021-12-04
+
+[Diff](https://github.com/serradura/u-struct/compare/v0.6.0...v0.7.0) | [Tag](https://github.com/serradura/u-struct/tree/v0.7.0)
 
 ### Added
 
@@ -301,6 +317,8 @@ Person = Micro::Struct.new(
 
 ## [0.6.0] - 2021-12-03
 
+[Diff](https://github.com/serradura/u-struct/compare/v0.5.0...v0.6.0) | [Tag](https://github.com/serradura/u-struct/tree/v0.6.0)
+
 ### Added
 
 - Add the capability to create a struct with optional members.
@@ -325,6 +343,8 @@ Persona.new
 <p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.5.0] - 2021-12-02
+
+[Diff](https://github.com/serradura/u-struct/compare/v0.4.0...v0.5.0) | [Tag](https://github.com/serradura/u-struct/tree/v0.5.0)
 
 ### Added
 
@@ -377,6 +397,8 @@ new_person.name # => "John Doe"
 
 ## [0.4.0] - 2021-12-02
 
+[Diff](https://github.com/serradura/u-struct/compare/v0.3.1...v0.4.0) | [Tag](https://github.com/serradura/u-struct/tree/v0.4.0)
+
 ### Added
 
 - Add `.members` to the module, it delegates the calling to its struct.
@@ -406,6 +428,8 @@ Person.respond_to?(:to_proc) # => false
 
 ## [0.3.1] - 2021-12-02
 
+[Diff](https://github.com/serradura/u-struct/compare/v0.3.0...v0.3.1) | [Tag](https://github.com/serradura/u-struct/tree/v0.3.1)
+
 ### Fixed
 
 - Fix the spec.files config of `u-struct.gemspec`.
@@ -414,6 +438,8 @@ Person.respond_to?(:to_proc) # => false
 
 ## [0.3.0] - 2021-12-02
 
+[Diff](https://github.com/serradura/u-struct/compare/v0.2.0...v0.3.0) | [Tag](https://github.com/serradura/u-struct/tree/v0.3.0)
+
 ### Added
 
 - Add `lib/u-struct.rb` to allow the bundler to require the gem in an automatic way.
@@ -421,6 +447,8 @@ Person.respond_to?(:to_proc) # => false
 <p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.2.0] - 2021-12-02
+
+[Diff](https://github.com/serradura/u-struct/compare/v0.1.0...v0.2.0) | [Tag](https://github.com/serradura/u-struct/tree/v0.2.0)
 
 ### Added
 
@@ -441,6 +469,8 @@ print_first_and_last_name(**person) # Rodrigo Serradura
 <p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 ## [0.1.0] - 2021-12-02
+
+[Diff](https://github.com/serradura/u-struct/compare/19beceb97a9bc22f2a485b82e4002b6a2e20a73c...v0.1.0) | [Tag](https://github.com/serradura/u-struct/tree/v0.1.0)
 
 ### Added
 
