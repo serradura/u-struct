@@ -594,30 +594,35 @@ The `.new` is an alias for the `.__new__` method, so you can use `.__new__` when
 
 ```ruby
 module RGB
-  Number = ::Struct.new(:value) { def to_s; '%02x' % value; end }
+  Number = ->(value) do
+    return value if value.is_a?(::Integer) && value >= 0 && value <= 255
+
+    raise TypeError, "#{value} must be an Integer(>= 0 and <= 255)"
+  end
 
   Color = Micro::Struct.new(:red, :green, :blue) do
+    def self.new(r, g, b)
+      __new__(
+        red: Number[r],
+        green: Number[g],
+        blue: Number[b],
+      )
+    end
+
     def to_hex
       "##{red}#{green}#{blue}"
     end
   end
-
-  module Color
-    def self.new(r, g, b)
-      __new__(
-        red: Number.new(r),
-        green: Number.new(g),
-        blue: Number.new(b),
-      )
-    end
-  end
 end
 
-rgb_color = RGB::Color.new(1,5,255)
+rgb_color = RGB::Color.new(1, 5, 255)
 # => #<struct RGB::Color::Struct red=#<struct RGB::Number value=1>, green=#<struct RGB::Number value=5>, blue=#<struct RGB::Number value=255>>
 
 rgb_color.to_hex
 # => "#0105ff"
+
+RGB::Color.new(-1, 5, 255)
+# => TypeError: -1 must be an Integer(>= 0 and <= 255)
 ```
 
 <p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
