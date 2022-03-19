@@ -39,7 +39,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Diff](https://github.com/serradura/u-struct/compare/v1.0.0...main)
 
+### Added
+
+- Add `Micro::Struct[]` as an alias of `Micro::Struct.with`.
+  ```ruby
+  Micro::Struct[:readonly] # is the same as Micro::Struct.with(:readonly)
+  ```
+
+**Development stuff**
+
+- Set up Rubocop.
 - Add `.rbi` files, and set up sorbet to be used in development.
+
+<p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
 <p align="right">(<a href="#changelog-">⬆️ &nbsp;back to top</a>)</p>
 
