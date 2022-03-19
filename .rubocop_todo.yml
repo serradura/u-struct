@@ -5,3 +5,6 @@
 # one by one as the offenses are removed from the code base.
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
+
+Gemspec/RequireMFA:
+  Enabled: false
