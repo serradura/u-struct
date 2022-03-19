@@ -5,6 +5,18 @@ module Micro::Struct
   STRUCT_BLOCK  = T.type_alias { T.nilable(T.proc.params(arg0: T.untyped).returns(T.untyped)) }
 
   sig {
+    params(feature_names: Symbol).returns(Micro::Struct::Factory)
+  }
+  def self.with(*feature_names)
+  end
+
+  sig {
+    params(feature_names: Symbol).returns(Micro::Struct::Factory)
+  }
+  def self.[](*feature_names)
+  end
+
+  sig {
     params(
       members:  STR_OR_SYMBOL,
       required: T.nilable(T.any(STR_OR_SYMBOL, T::Array[STR_OR_SYMBOL])),
@@ -14,12 +26,6 @@ module Micro::Struct
     .returns(T.class_of(Struct))
   }
   def self.new(*members, required: nil, optional: nil, &block)
-  end
-
-  sig {
-    params(feature_names: Symbol).returns(Micro::Struct::Factory)
-  }
-  def self.with(*feature_names)
   end
 
   sig {
