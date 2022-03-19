@@ -16,6 +16,7 @@ require:
   - rubocop-minitest
 
 AllCops:
+  NewCops: enable
   TargetRubyVersion: 2.5
 
 # == Gemspec ==
@@ -50,6 +51,9 @@ Style/Lambda:
 Style/LambdaCall:
   Enabled: false
 
+Style/ModuleFunction:
+  EnforcedStyle: extend_self
+
 Style/RaiseArgs:
   EnforcedStyle: compact
 
@@ -76,7 +80,6 @@ Layout/SpaceInsideArrayLiteralBrackets:
 
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
-  EnforcedStyleForEmptyBrackets: no_space
 
 # == Lint ==
 
@@ -116,3 +119,11 @@ Metrics/MethodLength:
 Metrics/ClassLength:
   Exclude:
     - test/**/*.rb
+
+# == Minitest ==
+
+Minitest/AssertWithExpectedArgument:
+  Enabled: false
+
+Minitest/MultipleAssertions:
+  Max: 21

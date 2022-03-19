@@ -59,15 +59,19 @@ module Micro
   #
   #   Micro::Struct.with(*features).new(...) {}
   module Struct
-    def self.new(*members, required: nil, optional: nil, &block)
-      with.__create__(members, required, optional, block)
-    end
+    extend self
 
-    def self.with(*feature_names)
+    def with(*feature_names)
       Factory.new(feature_names)
     end
 
-    def self.instance(**members, &block)
+    alias_method :[], :with
+
+    def new(*members, required: nil, optional: nil, &block)
+      with.__create__(members, required, optional, block)
+    end
+
+    def instance(**members, &block)
       with.instance(**members, &block)
     end
   end

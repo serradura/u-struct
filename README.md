@@ -30,6 +30,7 @@
     - [`required:` option](#required-option)
     - [Defining custom methods/behavior](#defining-custom-methodsbehavior)
   - [`Micro::Struct.with`](#microstructwith)
+  - [`Micro::Struct[]`](#microstruct)
     - [`:to_ary`](#to_ary)
     - [`:to_hash`](#to_hash)
     - [`:to_proc`](#to_proc)
@@ -324,6 +325,15 @@ new_person == person
 
 new_person.class == person.class
 # true
+```
+
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
+
+### `Micro::Struct[]`
+
+The `[]` brackets method is as an alias of `Micro::Struct.with`. e.g.
+```ruby
+Micro::Struct[:readonly, :to_hash] # is the same as Micro::Struct.with(:readonly, :to_hash)
 ```
 
 <p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
