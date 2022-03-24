@@ -29,17 +29,17 @@ class Micro::Struct_Features_ExposedFeatures_Test < Minitest::Test
     assert_same Person2.features, Person2.features
     assert_same Person3.features, Person3.features
 
-    assert Person2.features.frozen?
-    assert Person3.features.frozen?
+    assert_predicate Person2.features, :frozen?
+    assert_predicate Person3.features, :frozen?
 
-    assert Person2.features.frozen?
-    assert Person3.features.frozen?
+    assert_predicate Person2.features, :frozen?
+    assert_predicate Person3.features, :frozen?
 
     assert_empty Person2.features.names
     assert_equal [:readonly, :to_proc], Person3.features.names
 
-    assert Person2.features.options.frozen?
-    assert Person3.features.options.frozen?
+    assert_predicate Person2.features.options, :frozen?
+    assert_predicate Person3.features.options, :frozen?
 
     assert_equal(
       {to_ary: false, to_hash: false, to_proc: false, readonly: false, instance_copy: false},
