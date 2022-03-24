@@ -38,6 +38,8 @@
     - [`:instance_copy`](#instance_copy)
     - [`:exposed_features`](#exposed_features)
   - [`Micro::Struct.instance` or `Micro::Struct.with(...).instance`](#microstructinstance-or-microstructwithinstance)
+  - [`Micro::Struct.immutable`](#microstructimmutable)
+  - [`Micro::Struct.readonly`](#microstructreadonly)
   - [TL;DR](#tldr)
 - [FAQ](#faq)
   - [How to override the Struct `.new` method?](#how-to-override-the-struct-new-method)
@@ -519,6 +521,67 @@ end
 
 person3.name # => "Rodrigo Serradura"
 person4.name # => "Rodrigo Serradura"
+```
+
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
+
+### `Micro::Struct.immutable`
+
+This method is as a shortcut to `Micro::Struct.with(:readonly, :instance_copy)`.
+As it is quite common to see the usage of these two features, I decided to create this method to improve the DX.
+
+Additional info:
+1. It accepts the `with:` option, which can be used to define additional features.
+2. The `.instance` method can be called after its usage.
+
+Usage examples:
+
+```ruby
+Micro::Struct.immutable.new(:name)
+
+Micro::Struct.immutable.new(:name) do
+  def hi(other_name)
+    "Hi, #{other_name}! My name is #{name}"
+  end
+end
+
+Micro::Struct.immutable(with: :to_hash).new(:name)
+
+Micro::Struct.immutable(with: [:to_hash, :to_proc]).new(:name)
+
+Micro::Struct.immutable.instance(name: 'Rodrigo')
+
+Micro::Struct.immutable(with: [:to_hash]).instance(name: 'Serradura')
+```
+
+<p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>
+
+### `Micro::Struct.readonly`
+
+This method is as a shortcut to `Micro::Struct.with(:readonly)`.
+
+Additional info:
+1. It accepts the `with:` option, which can be used to define additional features.
+2. The `.instance` method can be called after its usage.
+
+Usage examples:
+
+```ruby
+Micro::Struct.readonly.new(:name)
+
+Micro::Struct.readonly.new(:name) do
+  def hi(other_name)
+    "Hi, #{other_name}! My name is #{name}"
+  end
+end
+
+Micro::Struct.readonly(with: :to_hash).new(:name)
+
+Micro::Struct.readonly(with: [:to_hash, :to_proc]).new(:name)
+
+Micro::Struct.readonly.instance(name: 'Rodrigo')
+
+Micro::Struct.readonly(with: [:to_hash]).instance(name: 'Serradura')
 ```
 
 <p align="right">(<a href="#table-of-contents-">⬆️ &nbsp;back to top</a>)</p>

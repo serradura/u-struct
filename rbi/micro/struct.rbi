@@ -37,4 +37,32 @@ module Micro::Struct
   }
   def self.instance(**members, &block)
   end
+
+  READONLY = T.let(T::Array[Symbol])
+  IMMUTABLE = T.let(T::Array[Symbol])
+  EMPTY_ARRAY = T.let(T::Array)
+
+  sig {
+    params(with: T::Array[Symbol]).returns(Micro::Struct::Factory)
+  }
+  def readonly(with: EMPTY_ARRAY)
+  end
+
+  sig {
+    params(with: T::Array[Symbol]).returns(Micro::Struct::Factory)
+  }
+  def immutable(with: EMPTY_ARRAY)
+  end
+
+  private
+
+  sig {
+    params(
+      names: T.nilable(T::Array[Symbol]),
+      defaults: T::Array[Symbol]
+    )
+    .returns(Micro::Struct::Factory)
+  }
+  def factory(names, defaults = EMPTY_ARRAY)
+  end
 end
