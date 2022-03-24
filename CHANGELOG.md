@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [[Unreleased]](#unreleased)
+- [[1.1.0] - 2021-03-23](#110---2021-03-23)
   - [Added](#added)
 - [[1.0.0] - 2021-01-19](#100---2021-01-19)
 - [[0.12.0] - 2021-12-22](#0120---2021-12-22)
@@ -36,11 +37,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - [Added](#added-10)
 - [[0.1.0] - 2021-12-02](#010---2021-12-02)
   - [Added](#added-11)
-
 ## [Unreleased]
 
-[Diff](https://github.com/serradura/u-struct/compare/v1.0.0...main)
+[Diff](https://github.com/serradura/u-struct/compare/v1.1.0...main)
 
+## [1.1.0] - 2021-03-23
+
+[Diff](https://github.com/serradura/u-struct/compare/v1.0.0...v1.1.0) | [Tag](https://github.com/serradura/u-struct/tree/v1.1.0)
 ### Added
 
 - Add `Micro::Struct[]` as an alias of `Micro::Struct.with`.
