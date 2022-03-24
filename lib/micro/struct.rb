@@ -62,7 +62,7 @@ module Micro
     extend self
 
     def with(*feature_names)
-      Factory.new(feature_names)
+      factory(feature_names)
     end
 
     alias_method :[], :with
@@ -74,5 +74,27 @@ module Micro
     def instance(**members, &block)
       with.instance(**members, &block)
     end
+
+    READONLY = [:readonly].freeze
+    IMMUTABLE = [:readonly, :instance_copy].freeze
+    EMPTY_ARRAY = [].freeze
+
+    def readonly(with: EMPTY_ARRAY)
+      factory(with, READONLY)
+    end
+
+    def immutable(with: EMPTY_ARRAY)
+      factory(with, IMMUTABLE)
+    end
+
+    private
+
+    def factory(names, defaults = EMPTY_ARRAY)
+      features = ::Kernel.Array(names)
+
+      Factory.new(defaults.empty? ? features : defaults + features)
+    end
+
+    private_constant :READONLY, :IMMUTABLE, :EMPTY_ARRAY
   end
 end
